@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gmail.justinxvopro.BattleBot.menusystem.MenuManager;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -22,6 +23,7 @@ public class BotCore {
     private final static Logger LOGGER = LoggerFactory.getLogger(BotCore.class);
     private static JDA BOT_JDA;
     public static final char PREFIX = '!';
+    public static final MenuManager MENU_MANAGER = new MenuManager();
 
     public static void main(String args[]) {
 	File configFile = new File("config.json");
@@ -49,7 +51,7 @@ public class BotCore {
 	}
 
 	try {
-	    BOT_JDA = new JDABuilder().addEventListeners(new CommandListener()).setToken(TOKEN).build();
+	    BOT_JDA = new JDABuilder().addEventListeners(new CommandListener(), BotCore.MENU_MANAGER).setToken(TOKEN).build();
 	    LOGGER.info(BOT_JDA.getInviteUrl(Permission.values()));
 	} catch (LoginException e) {
 	    e.printStackTrace();

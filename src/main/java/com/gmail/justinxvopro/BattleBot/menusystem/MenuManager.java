@@ -16,7 +16,6 @@ public class MenuManager implements EventListener {
     private Map<String, DiscordMenu> mappedMessages = new HashMap<>();
 
     public void submit(DiscordMenu menu, TextChannel t) {
-
         t.sendMessage(menu.getMessage()).queue(msg -> {
             for (String id : menu.reactions()) {
                 try {
