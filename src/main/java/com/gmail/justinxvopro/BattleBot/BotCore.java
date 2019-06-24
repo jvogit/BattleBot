@@ -3,7 +3,6 @@ package com.gmail.justinxvopro.BattleBot;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import javax.security.auth.login.LoginException;
 
@@ -15,13 +14,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.Permission;
 
 public class BotCore {
     private static String TOKEN;
     public static ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private final static Logger LOGGER = LoggerFactory.getLogger(BotCore.class);
     private static JDA BOT_JDA;
-    public static final char PREFIX = ',';
+    public static final char PREFIX = '!';
 
     public static void main(String args[]) {
 	File configFile = new File("config.json");
@@ -49,7 +49,8 @@ public class BotCore {
 	}
 
 	try {
-	    BOT_JDA = new JDABuilder().setToken(TOKEN).build();
+	    BOT_JDA = new JDABuilder().addEventListeners(new CommandListener()).setToken(TOKEN).build();
+	    LOGGER.info(BOT_JDA.getInviteUrl(Permission.values()));
 	} catch (LoginException e) {
 	    e.printStackTrace();
 	    LOGGER.error("Unable to login: " + e.getMessage());

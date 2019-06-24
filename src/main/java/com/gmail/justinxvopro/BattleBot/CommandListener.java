@@ -4,6 +4,7 @@ import java.util.stream.Stream;
 
 import com.gmail.justinxvopro.BattleBot.commands.BattleCommand;
 import com.gmail.justinxvopro.BattleBot.commands.Command;
+import com.gmail.justinxvopro.BattleBot.commands.HelpCommand;
 
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -11,6 +12,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class CommandListener extends ListenerAdapter {
     public static final Command[] COMMAND_LIST = {
+	    new HelpCommand(),
 	    new BattleCommand()
     };
     
