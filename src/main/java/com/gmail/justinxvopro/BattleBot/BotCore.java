@@ -21,18 +21,24 @@ public class BotCore {
     public static ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private final static Logger LOGGER = LoggerFactory.getLogger(BotCore.class);
     private static JDA BOT_JDA;
+    public static final char PREFIX = ',';
 
     public static void main(String args[]) {
+	File configFile = new File("config.json");
+	if (!configFile.exists()) {
+	    try {
+		Files.copy(BotCore.class.getResourceAsStream("/config.json"), configFile.toPath());
+	    } catch (IOException e) {
+		LOGGER.error("Unable to create config.json");
+		return;
+	    }
+	}
 	if (args.length >= 2 && args[0].equalsIgnoreCase("-token")) {
 	    LOGGER.info("Detected -token arguments using token provided");
 	    TOKEN = args[1];
 	} else {
 	    LOGGER.info("Using config.json token");
 	    try {
-		File configFile = new File("config.json");
-		if (!configFile.exists()) {
-		    Files.copy(BotCore.class.getResourceAsStream("/config.json"), configFile.toPath());
-		}
 		JsonNode config = OBJECT_MAPPER.readTree(configFile);
 		JsonNode token = config.findPath("token");
 		TOKEN = token.asText();
