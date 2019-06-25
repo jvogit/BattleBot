@@ -1,11 +1,11 @@
-package com.gmail.justinxvopro.BattleBot.commands;
+package com.gmail.justinxvopro.battlebot.commands;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.gmail.justinxvopro.BattleBot.CommandListener;
+import com.gmail.justinxvopro.battlebot.CommandListener;
 
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;

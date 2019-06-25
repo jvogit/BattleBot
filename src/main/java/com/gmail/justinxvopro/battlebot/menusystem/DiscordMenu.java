@@ -1,4 +1,4 @@
-package com.gmail.justinxvopro.BattleBot.menusystem;
+package com.gmail.justinxvopro.battlebot.menusystem;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.gmail.justinxvopro.BattleBot.menusystem.MenuActionPlayer.WrappedActionParameters;
+import com.gmail.justinxvopro.battlebot.menusystem.MenuActionPlayer.WrappedActionParameters;
 
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;

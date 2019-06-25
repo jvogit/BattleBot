@@ -36,7 +36,7 @@
 							<transformers>
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<mainClass>com.gmail.justinxvopro.BattleBot.BotCore</mainClass>
+									<mainClass>com.gmail.justinxvopro.battlebot.BotCore</mainClass>
 								</transformer>
 								<!-- <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer"> 
 									<resource>META-INF/services/java.sql.Driver</resource> </transformer> -->

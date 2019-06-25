@@ -1,4 +1,4 @@
-package com.gmail.justinxvopro.BattleBot.battlesystem;
+package com.gmail.justinxvopro.battlebot.battlesystem;
 
 import java.util.stream.Stream;
 
@@ -15,7 +15,7 @@ public class DualBattle extends Battle {
     }
 
     @Override
-    void gameTick() {
+    public void gameTick() {
 	Stream.of(this.getInvolved()).forEach(player -> {
 	    player.getMessage().editMessage(player.getBattlePanel()).queue(player::setMessage);
 	});
@@ -30,13 +30,13 @@ public class DualBattle extends Battle {
     }
 
     @Override
-    void start() {
+    public void start() {
 	Stream.of(this.getInvolved()).forEach(player -> {
 	    BattlePlayer.sendBattlePanel(player, output, player::setMessage);
 	});
     }
 
     @Override
-    void end() {
+    public void end() {
     }
 }

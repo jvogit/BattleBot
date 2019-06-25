@@ -1,4 +1,4 @@
-package com.gmail.justinxvopro.BattleBot.battlesystem;
+package com.gmail.justinxvopro.battlebot.battlesystem;
 
 public class AttackMove implements Move {
 

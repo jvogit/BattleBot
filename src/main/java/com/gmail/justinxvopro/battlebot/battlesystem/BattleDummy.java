@@ -1,4 +1,4 @@
-package com.gmail.justinxvopro.BattleBot.battlesystem;
+package com.gmail.justinxvopro.battlebot.battlesystem;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.MessageBuilder;
@@ -11,7 +11,7 @@ public class BattleDummy extends BattlePlayer {
     }
 
     @Override
-    Message getBattlePanel() {
+    public Message getBattlePanel() {
 	EmbedBuilder embedBuilder = new EmbedBuilder();
 	embedBuilder.setTitle("BATTLE DUMMY");
 	embedBuilder.addField("Health", this.getHealth()+"", true);
@@ -20,7 +20,7 @@ public class BattleDummy extends BattlePlayer {
     }
 
     @Override
-    String getName() {
+    public String getName() {
 	return "BATTLE DUMMY";
     }
 

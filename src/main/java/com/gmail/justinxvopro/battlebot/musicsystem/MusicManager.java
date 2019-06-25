@@ -1,4 +1,4 @@
-package com.gmail.justinxvopro.BattleBot.musicsystem;
+package com.gmail.justinxvopro.battlebot.musicsystem;
 
 import java.util.HashMap;
 import java.util.Map;

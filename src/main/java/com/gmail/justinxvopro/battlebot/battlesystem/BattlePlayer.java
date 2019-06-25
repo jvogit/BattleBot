@@ -1,10 +1,10 @@
-package com.gmail.justinxvopro.BattleBot.battlesystem;
+package com.gmail.justinxvopro.battlebot.battlesystem;
 
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
-import com.gmail.justinxvopro.BattleBot.BotCore;
-import com.gmail.justinxvopro.BattleBot.menusystem.MenuBuilder;
+import com.gmail.justinxvopro.battlebot.BotCore;
+import com.gmail.justinxvopro.battlebot.menusystem.MenuBuilder;
 
 import lombok.Getter;
 import lombok.Setter;

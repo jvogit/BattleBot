@@ -1,4 +1,4 @@
-package com.gmail.justinxvopro.BattleBot.musicsystem;
+package com.gmail.justinxvopro.battlebot.musicsystem;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;

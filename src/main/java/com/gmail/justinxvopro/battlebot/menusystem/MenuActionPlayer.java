@@ -1,4 +1,4 @@
-package com.gmail.justinxvopro.BattleBot.menusystem;
+package com.gmail.justinxvopro.battlebot.menusystem;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

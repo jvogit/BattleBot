@@ -1,4 +1,4 @@
-package com.gmail.justinxvopro.BattleBot.battlesystem;
+package com.gmail.justinxvopro.battlebot.battlesystem;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,8 +10,11 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 
 public class BattleManager {
-    private Battle onGoingBattle;
+    private static Map<Guild, BattleManager> BIG_DICT = new HashMap<>();
     private static ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+    
+    private Battle onGoingBattle;
+
     static {
 	executor.scheduleWithFixedDelay(()->{
 	    BattleManager.BIG_DICT.values().stream().filter(BattleManager::isThereOngoingBattle).forEach(BattleManager::tickBattle);
@@ -36,7 +39,6 @@ public class BattleManager {
 	this.onGoingBattle = null;
     }
     
-    private static Map<Guild, BattleManager> BIG_DICT = new HashMap<>();
     public static void update(JDA jda) {
 	BIG_DICT.clear();
 	jda.getGuilds().forEach(guild -> {

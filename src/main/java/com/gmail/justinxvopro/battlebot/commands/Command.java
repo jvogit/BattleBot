@@ -1,4 +1,4 @@
-package com.gmail.justinxvopro.BattleBot.commands;
+package com.gmail.justinxvopro.battlebot.commands;
 
 import java.util.ArrayList;
 import java.util.Arrays;

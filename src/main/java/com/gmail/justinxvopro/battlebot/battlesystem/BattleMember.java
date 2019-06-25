@@ -1,4 +1,4 @@
-package com.gmail.justinxvopro.BattleBot.battlesystem;
+package com.gmail.justinxvopro.battlebot.battlesystem;
 
 import lombok.Getter;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -16,7 +16,7 @@ public class BattleMember extends BattlePlayer {
     }
 
     @Override
-    Message getBattlePanel() {
+    public Message getBattlePanel() {
 	EmbedBuilder embedBuilder = new EmbedBuilder();
 	embedBuilder.setTitle(member.getEffectiveName());
 	embedBuilder.setThumbnail(member.getUser().getAvatarUrl());
@@ -26,7 +26,7 @@ public class BattleMember extends BattlePlayer {
     }
 
     @Override
-    String getName() {
+    public String getName() {
 	return member.getEffectiveName();
     }
     

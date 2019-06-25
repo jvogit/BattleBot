@@ -1,4 +1,4 @@
-package com.gmail.justinxvopro.BattleBot.menusystem;
+package com.gmail.justinxvopro.battlebot.menusystem;
 
 import java.util.ArrayList;
 import java.util.HashMap;

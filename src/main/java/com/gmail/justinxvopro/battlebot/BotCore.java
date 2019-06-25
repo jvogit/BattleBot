@@ -1,4 +1,4 @@
-package com.gmail.justinxvopro.BattleBot;
+package com.gmail.justinxvopro.battlebot;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gmail.justinxvopro.BattleBot.menusystem.MenuManager;
+import com.gmail.justinxvopro.battlebot.menusystem.MenuManager;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;

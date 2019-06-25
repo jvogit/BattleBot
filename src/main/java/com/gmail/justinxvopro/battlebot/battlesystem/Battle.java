@@ -1,4 +1,4 @@
-package com.gmail.justinxvopro.BattleBot.battlesystem;
+package com.gmail.justinxvopro.battlebot.battlesystem;
 
 import lombok.Getter;
 
@@ -11,9 +11,9 @@ public abstract class Battle {
 	this.involved = players;
     }
     
-    abstract void gameTick();
+    public abstract void gameTick();
     
-    abstract void start();
+    public abstract void start();
     
-    abstract void end();
+    public abstract void end();
 }

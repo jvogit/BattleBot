@@ -1,10 +1,10 @@
-package com.gmail.justinxvopro.BattleBot;
+package com.gmail.justinxvopro.battlebot;
 
 import java.util.stream.Stream;
 
-import com.gmail.justinxvopro.BattleBot.commands.BattleCommand;
-import com.gmail.justinxvopro.BattleBot.commands.Command;
-import com.gmail.justinxvopro.BattleBot.commands.HelpCommand;
+import com.gmail.justinxvopro.battlebot.commands.BattleCommand;
+import com.gmail.justinxvopro.battlebot.commands.Command;
+import com.gmail.justinxvopro.battlebot.commands.HelpCommand;
 
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
