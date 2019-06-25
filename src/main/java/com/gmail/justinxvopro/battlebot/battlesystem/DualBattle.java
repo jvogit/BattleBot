@@ -10,7 +10,8 @@ import net.dv8tion.jda.api.entities.TextChannel;
 public class DualBattle extends Battle {
     private TextChannel output;
     private boolean hasEnded = false;
-
+    private boolean hasStarted = false;
+    
     public DualBattle(BattlePlayer one, BattlePlayer two, TextChannel output) {
 	super(one, two);
 	one.setOpponent(two);
@@ -20,12 +21,14 @@ public class DualBattle extends Battle {
 
     @Override
     public void gameTick() {
+	if(!this.hasStarted)
+	    return;
 	super.gameTick();
 	if (Stream.of(this.getInvolved()).anyMatch(bp -> bp.getHealth() <= 0)) {
 	    BattleManager.getBattleManager(output.getGuild()).stopBattle();
 	    Stream.of(this.getInvolved()).forEach(player -> {
 		BotCore.MENU_MANAGER.removeId(player.getMessage().getId());
-		player.getMessage().delete().queueAfter(5, TimeUnit.SECONDS);
+		player.getMessage().delete().queueAfter(10, TimeUnit.SECONDS);
 	    });
 	    BattlePlayer winner = determineWinner();
 	    this.output.sendMessage(winner.getName() + " has won the dual!").queue();
@@ -39,6 +42,7 @@ public class DualBattle extends Battle {
 
     @Override
     public void start() {
+	this.hasStarted = true;
 	Stream.of(this.getInvolved()).forEach(player -> {
 	    BattlePlayer.sendBattlePanel(player, output, player::setMessage);
 	});
@@ -52,5 +56,10 @@ public class DualBattle extends Battle {
     @Override
     public boolean hasEnded() {
 	return this.hasEnded;
+    }
+
+    @Override
+    public boolean hasStarted() {
+	return this.hasStarted;
     }
 }

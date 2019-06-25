@@ -2,6 +2,8 @@ package com.gmail.justinxvopro.battlebot.commands;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.gmail.justinxvopro.battlebot.battlesystem.AttackMove;
 import com.gmail.justinxvopro.battlebot.battlesystem.Battle;
@@ -22,29 +24,39 @@ public class BattleCommand implements Command {
 	TextChannel channel = e.getTextChannel();
 	List<Member> mentioned = e.getMessage().getMentionedMembers();
 	BattleManager bManager = BattleManager.getBattleManager(e.getGuild());
-	
-	if(args.length <= 1) {
+
+	if (args.length <= 1) {
 	    channel.sendMessage("battle - dual - spar - boss").queue();
 	    return true;
 	}
-	
-	if(bManager.isThereOngoingBattle()) {
+
+	if (bManager.isThereOngoingBattle()) {
 	    channel.sendMessage("There is an ongoing battle!").queue();
 	    return true;
 	}
-	
-	if(mentioned.size() == 0) {
-	    Battle battle = new DualBattle(new BattleDummyAI(), new BattleMember(e.getMember(), 10, new AttackMove()), channel);
+
+	if (mentioned.size() == 0) {
+	    Battle battle = new DualBattle(new BattleDummyAI(), new BattleMember(e.getMember(), 10, new AttackMove()),
+		    channel);
 	    bManager.setBattle(battle);
-	    VerificationManager.submitForVerification(e.getTextChannel(), (members)->{
-		channel.sendMessage("Starting battle. . .").queue(msg -> {
-		    msg.delete().queueAfter(5, TimeUnit.SECONDS, (v)->{
-			bManager.startBattle(battle);
+	    VerificationManager.submitForVerification(e.getTextChannel(), (members) -> {
+		if (!bManager.isStarted()) {
+		    bManager.setStarted(true);
+		    channel.sendMessage("Starting battle. . .").queue(msg -> {
+			msg.delete().queueAfter(5, TimeUnit.SECONDS, (v) -> {
+			    bManager.startBattle(battle);
+			});
 		    });
-		});
+		} else {
+		    channel.sendMessage(
+			    Stream.of(members).map(mem -> mem.getAsMention()).collect(Collectors.joining("\n"))
+				    + "\nYour battle has expired!").queue();
+		}
 	    }, e.getMember());
+	} else {
+
 	}
-	
+
 	return true;
     }
 

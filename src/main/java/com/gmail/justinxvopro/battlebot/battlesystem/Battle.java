@@ -28,4 +28,6 @@ public abstract class Battle {
     public abstract void end();
 
     public abstract boolean hasEnded();
+    
+    public abstract boolean hasStarted();
 }

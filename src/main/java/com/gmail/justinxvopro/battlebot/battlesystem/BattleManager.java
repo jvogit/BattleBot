@@ -6,6 +6,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import lombok.Getter;
+import lombok.Setter;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 
@@ -14,6 +16,8 @@ public class BattleManager {
     private static ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
     
     private Battle onGoingBattle;
+    @Setter
+    @Getter
     private boolean started = false;
     
     static {
@@ -36,7 +40,7 @@ public class BattleManager {
     
     public void startBattle(Battle battle) {
 	this.setBattle(battle);
-	this.started = true;
+	this.setStarted(true);
 	this.onGoingBattle.start();
     }
     
@@ -47,7 +51,7 @@ public class BattleManager {
     public void stopBattle() {
 	onGoingBattle.end();
 	this.setBattle(null);
-	this.started = false;
+	this.setStarted(false);
     }
     
     public static void update(JDA jda) {
