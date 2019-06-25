@@ -30,4 +30,7 @@ public class BattleMember extends BattlePlayer {
 	return member.getEffectiveName();
     }
     
+    public static BattleMember formDefaultBattleMember(Member m) {
+	return new BattleMember(m, 10, new AttackMove());
+    }
 }

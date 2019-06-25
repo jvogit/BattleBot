@@ -1,15 +1,16 @@
 package com.gmail.justinxvopro.battlebot.commands;
 
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.gmail.justinxvopro.battlebot.battlesystem.AttackMove;
 import com.gmail.justinxvopro.battlebot.battlesystem.Battle;
 import com.gmail.justinxvopro.battlebot.battlesystem.BattleDummyAI;
 import com.gmail.justinxvopro.battlebot.battlesystem.BattleManager;
 import com.gmail.justinxvopro.battlebot.battlesystem.BattleMember;
+import com.gmail.justinxvopro.battlebot.battlesystem.BattlePlayer;
 import com.gmail.justinxvopro.battlebot.battlesystem.DualBattle;
 import com.gmail.justinxvopro.battlebot.battlesystem.VerificationManager;
 
@@ -36,28 +37,33 @@ public class BattleCommand implements Command {
 	}
 
 	if (mentioned.size() == 0) {
-	    Battle battle = new DualBattle(new BattleDummyAI(), new BattleMember(e.getMember(), 10, new AttackMove()),
-		    channel);
-	    bManager.setBattle(battle);
-	    VerificationManager.submitForVerification(e.getTextChannel(), (members) -> {
-		if (!bManager.isStarted()) {
-		    bManager.setStarted(true);
-		    channel.sendMessage("Starting battle. . .").queue(msg -> {
-			msg.delete().queueAfter(5, TimeUnit.SECONDS, (v) -> {
-			    bManager.startBattle(battle);
-			});
-		    });
-		} else {
-		    channel.sendMessage(
-			    Stream.of(members).map(mem -> mem.getAsMention()).collect(Collectors.joining("\n"))
-				    + "\nYour battle has expired!").queue();
-		}
-	    }, e.getMember());
+	    this.setUpDualBattle(new BattleDummyAI(), BattleMember.formDefaultBattleMember(e.getMember()), e.getTextChannel());
 	} else {
-
+	    Member target = mentioned.get(0);
+	    this.setUpDualBattle(BattleMember.formDefaultBattleMember(e.getMember()), BattleMember.formDefaultBattleMember(target), e.getTextChannel());
 	}
 
 	return true;
+    }
+    
+    private void setUpDualBattle(BattlePlayer player1, BattlePlayer player2, TextChannel out) {
+	BattleManager bManager = BattleManager.getBattleManager(out.getGuild());
+	Battle battle = new DualBattle(player1, player2, out);
+	bManager.setBattle(battle);
+	Set<Member> potential_members = Stream.of(player1, player2).filter(bp -> bp instanceof BattleMember).map(bp -> ((BattleMember) bp).getMember()).collect(Collectors.toSet());
+	VerificationManager.submitForVerification(out, (members) -> {
+	    if (!bManager.isStarted()) {
+		bManager.setStarted(true);
+		out.sendMessage("Starting battle. . .").queue(msg -> {
+		    msg.delete().queueAfter(5, TimeUnit.SECONDS, (v) -> {
+			bManager.startBattle(battle);
+		    });
+		});
+	    } else {
+		out.sendMessage(Stream.of(members).map(mem -> mem.getAsMention()).collect(Collectors.joining("\n"))
+			+ "\nYour battle has expired!").queue();
+	    }
+	}, potential_members.toArray(new Member[potential_members.size()]));
     }
 
     @Override
