@@ -18,7 +18,7 @@ public class BattleManager {
     static {
 	executor.scheduleWithFixedDelay(()->{
 	    BattleManager.BIG_DICT.values().stream().filter(BattleManager::isThereOngoingBattle).forEach(BattleManager::tickBattle);
-	}, 0l, 1, TimeUnit.SECONDS);
+	}, 0l, 2, TimeUnit.SECONDS);
     }
     
     public boolean isThereOngoingBattle() {

@@ -43,7 +43,7 @@ public abstract class BattlePlayer {
     }
     
     public static void sendBattlePanel(BattleMember player, TextChannel to, Consumer<Message> messageSent) {
-	MenuBuilder mBuilder = MenuBuilder.builder(to.getGuild()).setRecipient(player.getMember());
+	MenuBuilder mBuilder = MenuBuilder.builder(to.getGuild()).setMessage(player.getBattlePanel()).setRecipient(player.getMember());
 	
 	Stream.of(player.getMoveSet()).forEach(move -> {
 	    mBuilder.assign(move.getId(), (parameters)->{

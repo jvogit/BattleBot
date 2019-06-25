@@ -20,7 +20,7 @@ public class CommandListener extends ListenerAdapter {
     public void onMessageReceived(MessageReceivedEvent event) {
 	Message msg = event.getMessage();
 	
-	if(msg.getContentRaw().charAt(0) != BotCore.PREFIX)
+	if(msg.getContentRaw().isEmpty() || msg.getContentRaw().charAt(0) != BotCore.PREFIX)
 	    return;
 	
 	String[] split = event.getMessage().getContentRaw().substring(1, event.getMessage().getContentRaw().length()).split("\\s+");

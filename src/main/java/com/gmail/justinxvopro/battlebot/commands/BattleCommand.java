@@ -14,7 +14,7 @@ public class BattleCommand implements Command {
     @Override
     public boolean execute(MessageReceivedEvent e, String[] args) {
 	TextChannel channel = e.getTextChannel();
-	BattleManager.getBattleManager(channel.getGuild()).startBattle(new DualBattle(new BattleMember(e.getMember(), 10, new AttackMove()), new BattleDummy(), channel));
+	BattleManager.getBattleManager(channel.getGuild()).startBattle(new DualBattle(new BattleDummy(), new BattleMember(e.getMember(), 10, new AttackMove()), channel));
 	return true;
     }
 

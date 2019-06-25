@@ -21,7 +21,7 @@ public class BotCore {
     private static String TOKEN;
     public static ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private final static Logger LOGGER = LoggerFactory.getLogger(BotCore.class);
-    private static JDA BOT_JDA;
+    public static JDA BOT_JDA;
     public static final char PREFIX = '!';
     public static final MenuManager MENU_MANAGER = new MenuManager();
 
@@ -51,7 +51,7 @@ public class BotCore {
 	}
 
 	try {
-	    BOT_JDA = new JDABuilder().addEventListeners(new CommandListener(), BotCore.MENU_MANAGER).setToken(TOKEN).build();
+	    BOT_JDA = new JDABuilder().addEventListeners(new CommandListener(), BotCore.MENU_MANAGER, new EventsListener()).setToken(TOKEN).build();
 	    LOGGER.info(BOT_JDA.getInviteUrl(Permission.values()));
 	} catch (LoginException e) {
 	    e.printStackTrace();

@@ -9,7 +9,7 @@ public class AttackMove implements Move {
 
     @Override
     public String getId() {
-	return "1F44A"; //👊
+	return "U+1F44A"; //👊
     }
     
 }
