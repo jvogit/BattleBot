@@ -1,12 +1,18 @@
 package com.gmail.justinxvopro.battlebot.battlesystem;
 
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
+
+import org.slf4j.LoggerFactory;
+
+import com.gmail.justinxvopro.battlebot.BotCore;
 
 import net.dv8tion.jda.api.entities.TextChannel;
 
 public class DualBattle extends Battle {
     private TextChannel output;
-    
+    private boolean hasEnded = false;
+
     public DualBattle(BattlePlayer one, BattlePlayer two, TextChannel output) {
 	super(one, two);
 	one.setOpponent(two);
@@ -16,17 +22,24 @@ public class DualBattle extends Battle {
 
     @Override
     public void gameTick() {
+	LoggerFactory.getLogger(DualBattle.class).info("Game tick!");
 	Stream.of(this.getInvolved()).forEach(player -> {
 	    player.getMessage().editMessage(player.getBattlePanel()).queue(player::setMessage);
 	});
-	if(Stream.of(this.getInvolved()).anyMatch(bp -> bp.getHealth() <= 0)) {
-	    determineWinner();
+	if (Stream.of(this.getInvolved()).anyMatch(bp -> bp.getHealth() <= 0)) {
 	    BattleManager.getBattleManager(output.getGuild()).stopBattle();
+	    Stream.of(this.getInvolved()).forEach(player -> {
+		BotCore.MENU_MANAGER.removeId(player.getMessage().getId());
+		player.getMessage().delete().queueAfter(2, TimeUnit.SECONDS);
+	    });
+	    BattlePlayer winner = determineWinner();
+	    this.output.sendMessage(winner.getName() + " has won the dual!").queue();
 	}
     }
-    
+
     private BattlePlayer determineWinner() {
-	return this.getInvolved()[0].getHealth() >= this.getInvolved()[1].getHealth() ? this.getInvolved()[0] : this.getInvolved()[1];
+	return this.getInvolved()[0].getHealth() >= this.getInvolved()[1].getHealth() ? this.getInvolved()[0]
+		: this.getInvolved()[1];
     }
 
     @Override
@@ -38,5 +51,11 @@ public class DualBattle extends Battle {
 
     @Override
     public void end() {
+	this.hasEnded = true;
+    }
+
+    @Override
+    public boolean hasEnded() {
+	return this.hasEnded;
     }
 }

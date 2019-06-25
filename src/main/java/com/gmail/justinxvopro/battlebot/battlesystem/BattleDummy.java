@@ -7,7 +7,7 @@ import net.dv8tion.jda.api.entities.Message;
 public class BattleDummy extends BattlePlayer {
 
     public BattleDummy() {
-	super(10, new Move[] {new AttackMove()});
+	super(1, new Move[] {new AttackMove()});
     }
 
     @Override

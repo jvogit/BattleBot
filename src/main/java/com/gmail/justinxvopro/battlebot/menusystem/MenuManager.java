@@ -5,6 +5,8 @@ import java.util.WeakHashMap;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
+import org.slf4j.LoggerFactory;
+
 import net.dv8tion.jda.api.entities.Emote;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -56,7 +58,7 @@ public class MenuManager implements EventListener {
                 return;
 
             DiscordMenu menu = mappedMessages.get(event.getMessageId());
-
+            
             if (menu.belongGuild(event.getGuild()) && (menu.getRecepientsId().stream()
                     .anyMatch(s -> s.equalsIgnoreCase(event.getMember().getUser().getId()))
                     || menu.getRecepientsId().isEmpty())) {
@@ -70,7 +72,7 @@ public class MenuManager implements EventListener {
     }
 
     public void removeId(String id) {
-        mappedMessages.remove(id);
+	LoggerFactory.getLogger(MenuManager.class).info("Removing " + id + " " + mappedMessages.remove(id));
     }
 
 }

@@ -16,4 +16,6 @@ public abstract class Battle {
     public abstract void start();
     
     public abstract void end();
+    
+    public abstract boolean hasEnded();
 }

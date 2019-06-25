@@ -38,4 +38,5 @@ public interface Command {
 
         return joined.trim();
     }
+    
 }
