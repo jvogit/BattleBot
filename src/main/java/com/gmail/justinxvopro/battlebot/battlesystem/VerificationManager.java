@@ -21,9 +21,9 @@ public class VerificationManager {
 
     public static void submitForVerification(TextChannel output, Consumer<Member[]> onAllVerified, Member... members) {
 	VerificationInfo vInfo = new VerificationInfo(members, onAllVerified);
-	MenuBuilder mBuilder = MenuBuilder.builder(output.getGuild());
 	Stream.of(members).forEach(member -> {
 	    EmbedBuilder eBuilder = new EmbedBuilder();
+	    MenuBuilder mBuilder = MenuBuilder.builder(output.getGuild());
 	    eBuilder.setTitle("Verify for Battle");
 	    eBuilder.setThumbnail(member.getUser().getAvatarUrl());
 	    MessageBuilder msgBuilder = new MessageBuilder();
