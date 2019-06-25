@@ -1,7 +1,7 @@
 package com.gmail.justinxvopro.BattleBot.menusystem;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.WeakHashMap;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -13,24 +13,10 @@ import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.hooks.EventListener;
 
 public class MenuManager implements EventListener {
-    private Map<String, DiscordMenu> mappedMessages = new HashMap<>();
+    private Map<String, DiscordMenu> mappedMessages = new WeakHashMap<>();
 
     public void submit(DiscordMenu menu, TextChannel t) {
-        t.sendMessage(menu.getMessage()).queue(msg -> {
-            for (String id : menu.reactions()) {
-                try {
-                    Emote emote = msg.getGuild().getEmotesByName(id, true).get(0);
-                    
-                    msg.addReaction(emote).queue();
-                } catch (Exception e) {
-                    msg.addReaction(id).queue();
-                }
-
-            }
-
-            mappedMessages.put(msg.getId(), menu);
-        });
-
+        submit(menu, t, (msg)->{});
     }
 
     public void submit(DiscordMenu menu, TextChannel t, Consumer<Message> to) {
@@ -64,7 +50,7 @@ public class MenuManager implements EventListener {
 
             String emoji[] = event.getReactionEmote().isEmoji()
                     ? new String[] { event.getReactionEmote().getAsCodepoints(), event.getReactionEmote().getEmoji() }
-                    : new String[] { event.getReactionEmote().getName().toLowerCase(), "" };
+                    : new String[] { event.getReactionEmote().getName().toLowerCase(), event.getReactionEmote().getId() };
 
             if (!mappedMessages.containsKey(event.getMessageId()))
                 return;
