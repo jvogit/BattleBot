@@ -4,10 +4,10 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.Message;
 
-public class BattleDummy extends BattlePlayer {
+public class BattleDummy extends BattleAIPlayer {
 
     public BattleDummy() {
-	super(1, new Move[] {new AttackMove()});
+	super(5, new Move[] {new AttackMove()});
     }
 
     @Override
@@ -22,6 +22,10 @@ public class BattleDummy extends BattlePlayer {
     @Override
     public String getName() {
 	return "BATTLE DUMMY";
+    }
+
+    @Override
+    public void aiTick() {
     }
 
 }

@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 import com.gmail.justinxvopro.battlebot.battlesystem.AttackMove;
 import com.gmail.justinxvopro.battlebot.battlesystem.Battle;
-import com.gmail.justinxvopro.battlebot.battlesystem.BattleDummy;
+import com.gmail.justinxvopro.battlebot.battlesystem.BattleDummyAI;
 import com.gmail.justinxvopro.battlebot.battlesystem.BattleManager;
 import com.gmail.justinxvopro.battlebot.battlesystem.BattleMember;
 import com.gmail.justinxvopro.battlebot.battlesystem.DualBattle;
@@ -34,7 +34,7 @@ public class BattleCommand implements Command {
 	}
 	
 	if(mentioned.size() == 0) {
-	    Battle battle = new DualBattle(new BattleDummy(), new BattleMember(e.getMember(), 10, new AttackMove()), channel);
+	    Battle battle = new DualBattle(new BattleDummyAI(), new BattleMember(e.getMember(), 10, new AttackMove()), channel);
 	    bManager.setBattle(battle);
 	    VerificationManager.submitForVerification(e.getTextChannel(), (members)->{
 		channel.sendMessage("Starting battle. . .").queue(msg -> {

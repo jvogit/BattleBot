@@ -20,9 +20,7 @@ public class DualBattle extends Battle {
 
     @Override
     public void gameTick() {
-	Stream.of(this.getInvolved()).forEach(player -> {
-	    player.getMessage().editMessage(player.getBattlePanel()).queue(player::setMessage);
-	});
+	super.gameTick();
 	if (Stream.of(this.getInvolved()).anyMatch(bp -> bp.getHealth() <= 0)) {
 	    BattleManager.getBattleManager(output.getGuild()).stopBattle();
 	    Stream.of(this.getInvolved()).forEach(player -> {
