@@ -1,6 +1,7 @@
 package com.gmail.justinxvopro.battlebot.commands;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import com.gmail.justinxvopro.battlebot.battlesystem.AttackMove;
 import com.gmail.justinxvopro.battlebot.battlesystem.Battle;
@@ -36,7 +37,11 @@ public class BattleCommand implements Command {
 	    Battle battle = new DualBattle(new BattleDummy(), new BattleMember(e.getMember(), 10, new AttackMove()), channel);
 	    bManager.setBattle(battle);
 	    VerificationManager.submitForVerification(e.getTextChannel(), (members)->{
-		bManager.startBattle(battle);
+		channel.sendMessage("Starting battle. . .").queue(msg -> {
+		    msg.delete().queueAfter(5, TimeUnit.SECONDS, (v)->{
+			bManager.startBattle(battle);
+		    });
+		});
 	    }, e.getMember());
 	}
 	

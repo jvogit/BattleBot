@@ -6,8 +6,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import org.slf4j.LoggerFactory;
-
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 
@@ -20,11 +18,9 @@ public class BattleManager {
     
     static {
 	executor.scheduleWithFixedDelay(()->{
-	    LoggerFactory.getLogger(BattleManager.class).info("Ticking on going battles!");
 	    try {
 		BattleManager.BIG_DICT.values().stream().filter(BattleManager::isThereOngoingBattle).forEach(BattleManager::tickBattle);
 	    }catch(Exception ex) {
-		LoggerFactory.getLogger(BattleManager.class).info("Ticking exception " + ex.getMessage());
 		ex.printStackTrace();
 	    }
 	}, 0l, 2, TimeUnit.SECONDS);

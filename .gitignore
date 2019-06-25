@@ -1,6 +1,6 @@
 /target/
 /
 .settings/
+/config.json
 .classpath
 .project
-config.json

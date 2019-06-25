@@ -3,8 +3,6 @@ package com.gmail.justinxvopro.battlebot.battlesystem;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
-import org.slf4j.LoggerFactory;
-
 import com.gmail.justinxvopro.battlebot.BotCore;
 
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -22,7 +20,6 @@ public class DualBattle extends Battle {
 
     @Override
     public void gameTick() {
-	LoggerFactory.getLogger(DualBattle.class).info("Game tick!");
 	Stream.of(this.getInvolved()).forEach(player -> {
 	    player.getMessage().editMessage(player.getBattlePanel()).queue(player::setMessage);
 	});
@@ -30,7 +27,7 @@ public class DualBattle extends Battle {
 	    BattleManager.getBattleManager(output.getGuild()).stopBattle();
 	    Stream.of(this.getInvolved()).forEach(player -> {
 		BotCore.MENU_MANAGER.removeId(player.getMessage().getId());
-		player.getMessage().delete().queueAfter(2, TimeUnit.SECONDS);
+		player.getMessage().delete().queueAfter(5, TimeUnit.SECONDS);
 	    });
 	    BattlePlayer winner = determineWinner();
 	    this.output.sendMessage(winner.getName() + " has won the dual!").queue();
