@@ -15,13 +15,24 @@ public abstract class Battle {
 
     public void gameTick() {
 	Stream.of(this.getInvolved()).forEach(player -> {
-	    if (player instanceof BattleAIPlayer) {
-		((BattleAIPlayer) player).aiTick();
-	    }
 	    if(!this.hasEnded())
 		player.getMessage().editMessage(player.getBattlePanel()).queue(player::setMessage);
 	});
     };
+    
+    public boolean checkForQueuedMoves() {
+	for(BattlePlayer player : this.involved) {
+	    if(!player.getMoveExecutions().isEmpty()) {
+		return true;
+	    }
+	}
+	
+	return false;
+    }
+    
+    public void executeAllQueuedMoves() {
+	Stream.of(this.involved).forEach(BattlePlayer::executeQueuedMoves);
+    }
 
     public abstract void start();
 

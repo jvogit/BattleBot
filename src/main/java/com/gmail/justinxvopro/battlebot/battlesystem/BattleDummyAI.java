@@ -15,7 +15,7 @@ public class BattleDummyAI extends BattleDummy {
 	Random random = ThreadLocalRandom.current();
 	canAttack = random.nextBoolean();
 	if(canAttack) {
-	    this.getMoveSet()[random.nextInt(this.getMoveSet().length)].performMove(this, this.getOpponent());
+	    this.queueMove(this.getMoveSet()[random.nextInt(this.getMoveSet().length)]);
 	}
     }
 }

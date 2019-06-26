@@ -7,13 +7,14 @@ import net.dv8tion.jda.api.entities.Message;
 public class BattleDummy extends BattleAIPlayer {
 
     public BattleDummy() {
-	super(5, new Move[] {new AttackMove()});
+	super(50, new Move[] {new AttackMove()});
     }
 
     @Override
     public Message getBattlePanel() {
 	EmbedBuilder embedBuilder = new EmbedBuilder();
 	embedBuilder.setTitle("BATTLE DUMMY");
+	embedBuilder.setDescription(this.getStatus());
 	embedBuilder.addField("Health", this.getHealth()+"", true);
 	
 	return new MessageBuilder().setEmbed(embedBuilder.build()).build();

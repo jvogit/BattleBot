@@ -11,5 +11,10 @@ public class AttackMove implements Move {
     public String getId() {
 	return "U+1F44A"; //👊
     }
+
+    @Override
+    public String getName() {
+	return "Attack Move";
+    }
     
 }

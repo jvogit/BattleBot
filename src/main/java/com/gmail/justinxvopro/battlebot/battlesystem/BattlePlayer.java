@@ -1,5 +1,7 @@
 package com.gmail.justinxvopro.battlebot.battlesystem;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
@@ -25,10 +27,33 @@ public abstract class BattlePlayer {
     @Getter
     @Setter
     private Message message;
+    @Getter
+    @Setter
+    private String status;
+    @Getter
+    private Map<Move, Integer> moveExecutions = new HashMap<>();
     
     public BattlePlayer(int health, Move...moves) {
 	this.moveSet = moves;
 	this.health = health;
+    }
+    
+    public void queueMove(Move move) {
+	if(!moveExecutions.containsKey(move))
+	    moveExecutions.put(move, 1);
+	moveExecutions.put(move, moveExecutions.get(move) + 1);
+    }
+    
+    public Map<Move, Integer> executeQueuedMoves() {
+	moveExecutions.entrySet().forEach(entry -> {
+	    for(int i = 0; i < entry.getValue(); i++) {
+		entry.getKey().performMove(this, this.getOpponent());
+	    }
+	});
+	Map<Move, Integer> copy = new HashMap<>(this.moveExecutions);
+	this.moveExecutions.clear();
+	
+	return copy;
     }
     
     abstract Message getBattlePanel();
@@ -47,7 +72,7 @@ public abstract class BattlePlayer {
 	
 	Stream.of(player.getMoveSet()).forEach(move -> {
 	    mBuilder.assign(move.getId(), (parameters)->{
-		move.performMove(player, player.getOpponent());
+		player.queueMove(move);
 		return false;
 	    });
 	});

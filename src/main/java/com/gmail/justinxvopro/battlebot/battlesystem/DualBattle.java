@@ -1,7 +1,12 @@
 package com.gmail.justinxvopro.battlebot.battlesystem;
 
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.gmail.justinxvopro.battlebot.BotCore;
 
@@ -11,6 +16,8 @@ public class DualBattle extends Battle {
     private TextChannel output;
     private boolean hasEnded = false;
     private boolean hasStarted = false;
+    private long ticks = 0;
+    private Logger LOGGER = LoggerFactory.getLogger(DualBattle.class);
     
     public DualBattle(BattlePlayer one, BattlePlayer two, TextChannel output) {
 	super(one, two);
@@ -21,8 +28,11 @@ public class DualBattle extends Battle {
 
     @Override
     public void gameTick() {
-	if(!this.hasStarted)
+	ticks++;
+	this.tickAllAi();
+	if(!this.hasStarted || !this.checkForQueuedMoves() || ticks % 3 != 0)
 	    return;
+	this.executeAllQueuedMoves();
 	super.gameTick();
 	if (Stream.of(this.getInvolved()).anyMatch(bp -> bp.getHealth() <= 0)) {
 	    BattleManager.getBattleManager(output.getGuild()).stopBattle();
@@ -38,6 +48,26 @@ public class DualBattle extends Battle {
     private BattlePlayer determineWinner() {
 	return this.getInvolved()[0].getHealth() >= this.getInvolved()[1].getHealth() ? this.getInvolved()[0]
 		: this.getInvolved()[1];
+    }
+    
+    private void tickAllAi() {
+	Stream.of(this.getInvolved()).forEach(player  -> {
+	    if (player instanceof BattleAIPlayer) {
+		((BattleAIPlayer) player).aiTick();
+	    }
+	});
+    }
+    
+    @Override
+    public void executeAllQueuedMoves() {
+	Stream.of(this.getInvolved()).forEach(player -> {
+	    Map<Move, Integer> executions = player.executeQueuedMoves();
+	    String status = executions.entrySet().stream().map(entry -> entry.getKey().getName() + " has executed " + entry.getValue() + " times.").collect(Collectors.joining("\n"));
+	    if(status.isEmpty())
+		return;
+	    this.LOGGER.info("Status " + status);
+	    player.setStatus(status);
+	});
     }
 
     @Override

@@ -20,6 +20,7 @@ public class BattleMember extends BattlePlayer {
 	EmbedBuilder embedBuilder = new EmbedBuilder();
 	embedBuilder.setTitle(member.getEffectiveName());
 	embedBuilder.setThumbnail(member.getUser().getAvatarUrl());
+	embedBuilder.setDescription(this.getStatus());
 	embedBuilder.addField("Health", this.getHealth()+"", true);
 	
 	return new MessageBuilder().setEmbed(embedBuilder.build()).build();
@@ -31,6 +32,6 @@ public class BattleMember extends BattlePlayer {
     }
     
     public static BattleMember formDefaultBattleMember(Member m) {
-	return new BattleMember(m, 10, new AttackMove());
+	return new BattleMember(m, 50, new AttackMove());
     }
 }
