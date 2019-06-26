@@ -16,7 +16,7 @@ public class DualBattle extends Battle {
     private TextChannel output;
     private boolean hasEnded = false;
     private boolean hasStarted = false;
-    private long ticks = 0;
+    private long ticks = 1;
     private Logger LOGGER = LoggerFactory.getLogger(DualBattle.class);
     
     public DualBattle(BattlePlayer one, BattlePlayer two, TextChannel output) {
@@ -29,7 +29,9 @@ public class DualBattle extends Battle {
     @Override
     public void gameTick() {
 	ticks++;
-	this.tickAllAi();
+	if(ticks > 3) {
+	    this.tickAllAi();
+	}
 	if(!this.hasStarted || !this.checkForQueuedMoves() || ticks % 3 != 0)
 	    return;
 	this.executeAllQueuedMoves();
@@ -50,14 +52,6 @@ public class DualBattle extends Battle {
 		: this.getInvolved()[1];
     }
     
-    private void tickAllAi() {
-	Stream.of(this.getInvolved()).forEach(player  -> {
-	    if (player instanceof BattleAIPlayer) {
-		((BattleAIPlayer) player).aiTick();
-	    }
-	});
-    }
-    
     @Override
     public void executeAllQueuedMoves() {
 	Stream.of(this.getInvolved()).forEach(player -> {
@@ -65,7 +59,6 @@ public class DualBattle extends Battle {
 	    String status = executions.entrySet().stream().map(entry -> entry.getKey().getName() + " has executed " + entry.getValue() + " times.").collect(Collectors.joining("\n"));
 	    if(status.isEmpty())
 		return;
-	    this.LOGGER.info("Status " + status);
 	    player.setStatus(status);
 	});
     }

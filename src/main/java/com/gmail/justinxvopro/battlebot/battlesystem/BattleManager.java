@@ -27,7 +27,7 @@ public class BattleManager {
 	    }catch(Exception ex) {
 		ex.printStackTrace();
 	    }
-	}, 0l, 2, TimeUnit.SECONDS);
+	}, 0l, 1, TimeUnit.SECONDS);
     }
     
     public boolean isThereOngoingBattle() {

@@ -18,7 +18,15 @@ public abstract class Battle {
 	    if(!this.hasEnded())
 		player.getMessage().editMessage(player.getBattlePanel()).queue(player::setMessage);
 	});
-    };
+    }
+    
+    public void tickAllAi() {
+	Stream.of(this.getInvolved()).forEach(player  -> {
+	    if (player instanceof BattleAIPlayer) {
+		((BattleAIPlayer) player).aiTick();
+	    }
+	});
+    }
     
     public boolean checkForQueuedMoves() {
 	for(BattlePlayer player : this.involved) {
