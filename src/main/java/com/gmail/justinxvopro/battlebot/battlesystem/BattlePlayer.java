@@ -39,8 +39,11 @@ public abstract class BattlePlayer {
     }
     
     public void queueMove(Move move) {
-	if(!moveExecutions.containsKey(move))
+	if(!moveExecutions.containsKey(move)) {
 	    moveExecutions.put(move, 1);
+	    return;
+	}
+	
 	moveExecutions.put(move, moveExecutions.get(move) + 1);
     }
     
