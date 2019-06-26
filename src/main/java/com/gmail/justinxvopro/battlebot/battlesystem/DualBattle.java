@@ -17,7 +17,6 @@ public class DualBattle extends Battle {
     private boolean hasEnded = false;
     private boolean hasStarted = false;
     private long ticks = 1;
-    private Logger LOGGER = LoggerFactory.getLogger(DualBattle.class);
     
     public DualBattle(BattlePlayer one, BattlePlayer two, TextChannel output) {
 	super(one, two);

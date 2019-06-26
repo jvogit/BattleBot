@@ -1,8 +1,8 @@
 package com.gmail.justinxvopro.battlebot.battlesystem;
 
+import com.gmail.justinxvopro.battlebot.utils.RandomUtils;
+
 import lombok.Getter;
-import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 
@@ -17,13 +17,8 @@ public class BattleMember extends BattlePlayer {
 
     @Override
     public Message getBattlePanel() {
-	EmbedBuilder embedBuilder = new EmbedBuilder();
-	embedBuilder.setTitle(member.getEffectiveName());
-	embedBuilder.setThumbnail(member.getUser().getAvatarUrl());
-	embedBuilder.setDescription(this.getStatus());
-	embedBuilder.addField("Health", this.getHealth()+"", true);
-	
-	return new MessageBuilder().setEmbed(embedBuilder.build()).build();
+	RandomUtils.log(this, this.getSpecialMessage());
+	return BattlePlayer.formDefaultBattlePanel(getName(), member.getUser().getAvatarUrl(), getStatus(), getSpecialMessage(), getHealth()+"");
     }
 
     @Override
@@ -32,6 +27,6 @@ public class BattleMember extends BattlePlayer {
     }
     
     public static BattleMember formDefaultBattleMember(Member m) {
-	return new BattleMember(m, 50, new AttackMove());
+	return new BattleMember(m, 50, new AttackMove(), new HealMove());
     }
 }

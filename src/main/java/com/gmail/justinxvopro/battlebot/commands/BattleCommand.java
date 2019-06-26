@@ -1,11 +1,13 @@
 package com.gmail.justinxvopro.battlebot.commands;
 
+import java.awt.Color;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.gmail.justinxvopro.battlebot.BotCore;
 import com.gmail.justinxvopro.battlebot.battlesystem.Battle;
 import com.gmail.justinxvopro.battlebot.battlesystem.BattleDummyAI;
 import com.gmail.justinxvopro.battlebot.battlesystem.BattleManager;
@@ -14,7 +16,10 @@ import com.gmail.justinxvopro.battlebot.battlesystem.BattlePlayer;
 import com.gmail.justinxvopro.battlebot.battlesystem.DualBattle;
 import com.gmail.justinxvopro.battlebot.battlesystem.VerificationManager;
 
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
@@ -27,7 +32,7 @@ public class BattleCommand implements Command {
 	BattleManager bManager = BattleManager.getBattleManager(e.getGuild());
 
 	if (args.length <= 1) {
-	    channel.sendMessage("battle - dual - spar - boss").queue();
+	    channel.sendMessage(this.getHelpMessage()).queue();
 	    return true;
 	}
 
@@ -44,6 +49,22 @@ public class BattleCommand implements Command {
 	}
 
 	return true;
+    }
+    
+    private Message getHelpMessage() {
+	MessageBuilder mBuilder = new MessageBuilder();
+	EmbedBuilder embedBuilder = new EmbedBuilder();
+	
+	embedBuilder
+	.setThumbnail("https://support.discordapp.com/hc/en-us/article_attachments/203595007/DiscordKnightMini.png")
+	.setAuthor("BattleBot", "https://discord.gg", BotCore.BOT_JDA.getSelfUser().getAvatarUrl())
+	.setTitle("Battle commands")
+	.setColor(Color.RED)
+	.addField("!battle spar", "Train with a Battle Dummy!", false)
+	.addField("!battle dual", "Dual with an opponent!", false)
+	.addField("!battle boss", "Fight the boss!", false);
+	
+	return mBuilder.setEmbed(embedBuilder.build()).build();
     }
     
     private void setUpDualBattle(BattlePlayer player1, BattlePlayer player2, TextChannel out) {

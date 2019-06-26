@@ -17,6 +17,8 @@ public abstract class Battle {
 	Stream.of(this.getInvolved()).forEach(player -> {
 	    if(!this.hasEnded())
 		player.getMessage().editMessage(player.getBattlePanel()).queue(player::setMessage);
+	    	player.setStatus("");
+	    	player.setSpecialMessage("");
 	});
     }
     
