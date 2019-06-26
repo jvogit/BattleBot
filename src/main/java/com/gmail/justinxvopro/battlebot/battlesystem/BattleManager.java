@@ -23,7 +23,7 @@ public class BattleManager {
     static {
 	executor.scheduleWithFixedDelay(()->{
 	    try {
-		BattleManager.BIG_DICT.values().stream().filter(BattleManager::isThereOngoingBattle).forEach(BattleManager::tickBattle);
+		BattleManager.BIG_DICT.values().stream().filter(BattleManager::isThereOngoingBattle).filter(bm -> bm.onGoingBattle.hasStarted()).forEach(BattleManager::tickBattle);
 	    }catch(Exception ex) {
 		ex.printStackTrace();
 	    }

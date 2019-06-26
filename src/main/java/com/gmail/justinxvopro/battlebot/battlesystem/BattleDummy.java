@@ -5,7 +5,7 @@ import net.dv8tion.jda.api.entities.Message;
 public class BattleDummy extends BattleAIPlayer {
 
     public BattleDummy() {
-	super(50, new Move[] {new AttackMove()});
+	super(2, new Move[] {new AttackMove()});
     }
 
     @Override
@@ -20,6 +20,11 @@ public class BattleDummy extends BattleAIPlayer {
 
     @Override
     public void aiTick() {
+    }
+
+    @Override
+    String getTaunt() {
+	return "...";
     }
 
 }

@@ -1,7 +1,5 @@
 package com.gmail.justinxvopro.battlebot.battlesystem;
 
-import com.gmail.justinxvopro.battlebot.utils.RandomUtils;
-
 import lombok.Getter;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
@@ -17,7 +15,6 @@ public class BattleMember extends BattlePlayer {
 
     @Override
     public Message getBattlePanel() {
-	RandomUtils.log(this, this.getSpecialMessage());
 	return BattlePlayer.formDefaultBattlePanel(getName(), member.getUser().getAvatarUrl(), getStatus(), getSpecialMessage(), getHealth()+"");
     }
 
@@ -28,5 +25,10 @@ public class BattleMember extends BattlePlayer {
     
     public static BattleMember formDefaultBattleMember(Member m) {
 	return new BattleMember(m, 50, new AttackMove(), new HealMove());
+    }
+
+    @Override
+    String getTaunt() {
+	return "You will not defeat me!";
     }
 }

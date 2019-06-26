@@ -67,6 +67,8 @@ public abstract class BattlePlayer {
     abstract Message getBattlePanel();
 
     abstract String getName();
+    
+    abstract String getTaunt();
 
     public static void sendBattlePanel(BattlePlayer player, TextChannel to, Consumer<Message> messageSent) {
 	if (player instanceof BattleMember) {

@@ -3,10 +3,12 @@ package com.gmail.justinxvopro.battlebot.battlesystem;
 import java.util.stream.Stream;
 
 import lombok.Getter;
+import lombok.Setter;
 
 public abstract class Battle {
 
     @Getter
+    @Setter
     private BattlePlayer[] involved;
 
     public Battle(BattlePlayer... players) {
@@ -17,8 +19,6 @@ public abstract class Battle {
 	Stream.of(this.getInvolved()).forEach(player -> {
 	    if(!this.hasEnded())
 		player.getMessage().editMessage(player.getBattlePanel()).queue(player::setMessage);
-	    	player.setStatus("");
-	    	player.setSpecialMessage("");
 	});
     }
     

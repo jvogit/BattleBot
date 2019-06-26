@@ -9,7 +9,6 @@ public class AttackMove implements Move {
 	if(RandomUtils.chance(10)) {
 	    on.setHealth(on.getHealth() - 2);
 	    by.setSpecialMessage(by.getSpecialMessage() + "\n1 Attack Move hit for double damage!");
-	    RandomUtils.log(this, by.getSpecialMessage());
 	}else {
 	    on.setHealth(on.getHealth() - 1);
 	}

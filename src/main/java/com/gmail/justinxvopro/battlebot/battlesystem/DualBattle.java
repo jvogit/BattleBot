@@ -1,23 +1,21 @@
 package com.gmail.justinxvopro.battlebot.battlesystem;
 
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.gmail.justinxvopro.battlebot.BotCore;
 
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 
 public class DualBattle extends Battle {
     private TextChannel output;
     private boolean hasEnded = false;
     private boolean hasStarted = false;
-    private long ticks = 1;
-    
+    private long ticks = 0;
+    private Message preMessage;
+
     public DualBattle(BattlePlayer one, BattlePlayer two, TextChannel output) {
 	super(one, two);
 	one.setOpponent(two);
@@ -28,10 +26,27 @@ public class DualBattle extends Battle {
     @Override
     public void gameTick() {
 	ticks++;
-	if(ticks > 3) {
-	    this.tickAllAi();
+
+	if (ticks == 1) {
+	    this.getInvolved()[0].setStatus(this.getInvolved()[0].getTaunt());
+	    this.getInvolved()[1].setStatus(this.getInvolved()[1].getTaunt());
+	    preMessage = output.sendMessage(this.getInvolved()[0].getBattlePanel()).complete();
 	}
-	if(!this.hasStarted || !this.checkForQueuedMoves() || ticks % 3 != 0)
+	if (ticks == 2) {
+	    preMessage.editMessage(this.getInvolved()[1].getBattlePanel()).complete();
+	}
+	if (ticks == 3) {
+	    preMessage.delete().complete();
+	    Stream.of(this.getInvolved()).forEach(player -> {
+		BattlePlayer.sendBattlePanel(player, output, player::setMessage);
+	    });
+	}
+	if (ticks > 3) {
+	    this.tickAllAi();
+	} else {
+	    return;
+	}
+	if (!this.checkForQueuedMoves() || ticks % 3 != 0)
 	    return;
 	this.executeAllQueuedMoves();
 	super.gameTick();
@@ -39,10 +54,16 @@ public class DualBattle extends Battle {
 	    BattleManager.getBattleManager(output.getGuild()).stopBattle();
 	    Stream.of(this.getInvolved()).forEach(player -> {
 		BotCore.MENU_MANAGER.removeId(player.getMessage().getId());
-		player.getMessage().delete().queueAfter(10, TimeUnit.SECONDS);
+		this.output.sendMessage(player.getBattlePanel()).queue();
+		player.getMessage().delete().queue();
 	    });
 	    BattlePlayer winner = determineWinner();
 	    this.output.sendMessage(winner.getName() + " has won the dual!").queue();
+	} else {
+	    Stream.of(this.getInvolved()).forEach(player -> {
+		player.setStatus("");
+		player.setSpecialMessage("");
+	    });
 	}
     }
 
@@ -50,13 +71,15 @@ public class DualBattle extends Battle {
 	return this.getInvolved()[0].getHealth() >= this.getInvolved()[1].getHealth() ? this.getInvolved()[0]
 		: this.getInvolved()[1];
     }
-    
+
     @Override
     public void executeAllQueuedMoves() {
 	Stream.of(this.getInvolved()).forEach(player -> {
 	    Map<Move, Integer> executions = player.executeQueuedMoves();
-	    String status = executions.entrySet().stream().map(entry -> entry.getKey().getName() + " has executed " + entry.getValue() + " times.").collect(Collectors.joining("\n"));
-	    if(status.isEmpty())
+	    String status = executions.entrySet().stream()
+		    .map(entry -> entry.getKey().getName() + " has executed " + entry.getValue() + " times.")
+		    .collect(Collectors.joining("\n"));
+	    if (status.isEmpty())
 		return;
 	    player.setStatus(status);
 	});
@@ -65,9 +88,6 @@ public class DualBattle extends Battle {
     @Override
     public void start() {
 	this.hasStarted = true;
-	Stream.of(this.getInvolved()).forEach(player -> {
-	    BattlePlayer.sendBattlePanel(player, output, player::setMessage);
-	});
     }
 
     @Override
