@@ -6,6 +6,7 @@ public class BattleWumpusBoss extends BattleBossPlayer {
 
     public BattleWumpusBoss() {
 	super(1000, new Move[] {});
+	this.setAvatarUrl("https://images.discordapp.net/avatars/562551251699630081/23f23de7b41aa0bb7fac1cb4edd5deed.png?size=512");
     }
 
     @Override
@@ -14,12 +15,17 @@ public class BattleWumpusBoss extends BattleBossPlayer {
 
     @Override
     public Message getBattlePanel() {
-	return BattlePlayer.formDefaultBattlePanel(this.getName(), "https://images.discordapp.net/avatars/562551251699630081/23f23de7b41aa0bb7fac1cb4edd5deed.png?size=512", getStatus(), getSpecialMessage(), getHealth()+"");
+	return BattleBossPlayer.applyBossDecoration(super.getBattlePanel());
     }
 
     @Override
     public String getName() {
 	return "Wumpus";
+    }
+
+    @Override
+    String getTaunt() {
+	return "Oink";
     }
 
 }

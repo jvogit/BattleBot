@@ -36,6 +36,9 @@ public abstract class BattlePlayer {
     @Setter
     private String specialMessage = "";
     @Getter
+    @Setter
+    private String avatarUrl;
+    @Getter
     private Map<Move, Integer> moveExecutions = new HashMap<>();
 
     public BattlePlayer(int health, Move... moves) {
@@ -64,7 +67,9 @@ public abstract class BattlePlayer {
 	return copy;
     }
 
-    abstract Message getBattlePanel();
+    public Message getBattlePanel() {
+	return BattlePlayer.formDefaultBattlePanel(this.getName(), this.getAvatarUrl(), getStatus(), getSpecialMessage(), getHealth()+"");
+    }
 
     abstract String getName();
     
