@@ -14,9 +14,10 @@ public class ChargeAttackMove implements Move {
 	    by.setSpecialMessage(by.getSpecialMessage() + "\n" + getName() + " failed to charge!");
 	}
 	
-	if(charges == 3) {
+	if(charges >= 3) {
 	    on.setHealth(on.getHealth() - 10);
 	    by.setSpecialMessage(by.getSpecialMessage() + "\n" + getName() + " has fully charged and hit " + on.getName() + " for 10 damage.");
+	    charges = 0;
 	}
     }
 

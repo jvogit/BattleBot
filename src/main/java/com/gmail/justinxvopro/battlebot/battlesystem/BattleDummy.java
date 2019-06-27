@@ -1,6 +1,6 @@
 package com.gmail.justinxvopro.battlebot.battlesystem;
 
-public class BattleDummy extends BattleAIPlayer {
+public class BattleDummy extends BattlePlayer {
 
     public BattleDummy() {
 	super(50, new Move[] {new AttackMove()});
@@ -10,13 +10,9 @@ public class BattleDummy extends BattleAIPlayer {
     public String getName() {
 	return "BATTLE DUMMY";
     }
-
+    
     @Override
-    public void aiTick() {
-    }
-
-    @Override
-    String getTaunt() {
+    public String getTaunt() {
 	return "...";
     }
 

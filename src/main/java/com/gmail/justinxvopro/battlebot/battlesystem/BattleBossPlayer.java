@@ -11,7 +11,7 @@ import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 
-public abstract class BattleBossPlayer extends BattleAIPlayer {
+public abstract class BattleBossPlayer extends BattlePlayer {
     @Getter
     @Setter
     private BattlePlayer[] opponents;

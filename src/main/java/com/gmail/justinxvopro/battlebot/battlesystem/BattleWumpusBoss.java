@@ -2,7 +2,7 @@ package com.gmail.justinxvopro.battlebot.battlesystem;
 
 import net.dv8tion.jda.api.entities.Message;
 
-public class BattleWumpusBoss extends BattleBossPlayer {
+public class BattleWumpusBoss extends BattleBossPlayer implements IBattleAIPlayer {
 
     public BattleWumpusBoss() {
 	super(1000, new Move[] {});
@@ -24,7 +24,7 @@ public class BattleWumpusBoss extends BattleBossPlayer {
     }
 
     @Override
-    String getTaunt() {
+    public String getTaunt() {
 	return "Oink";
     }
 

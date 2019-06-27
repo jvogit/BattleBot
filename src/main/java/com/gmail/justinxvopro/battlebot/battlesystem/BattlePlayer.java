@@ -15,8 +15,7 @@ import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 
-public abstract class BattlePlayer {
-
+public abstract class BattlePlayer implements IBattlePlayer {
     @Getter
     @Setter
     private int health;
@@ -70,20 +69,24 @@ public abstract class BattlePlayer {
     public Message getBattlePanel() {
 	return BattlePlayer.formDefaultBattlePanel(this.getName(), this.getAvatarUrl(), getStatus(), getSpecialMessage(), getHealth()+"");
     }
-
-    abstract String getName();
     
-    abstract String getTaunt();
+    public void concatSpecialMessageWithNewline(String s) {
+	setSpecialMessage(getSpecialMessage() + "\n" + s);
+    }
+
+    public abstract String getName();
+    
+    public abstract String getTaunt();
 
     public static void sendBattlePanel(BattlePlayer player, TextChannel to, Consumer<Message> messageSent) {
-	if (player instanceof BattleMember) {
-	    BattlePlayer.sendBattlePanel((BattleMember) player, to, messageSent);
+	if (player instanceof IBattleMember) {
+	    BattlePlayer.sendBattlePanel((IBattleMember) player, to, messageSent);
 	} else {
 	    to.sendMessage(player.getBattlePanel()).queue(messageSent);
 	}
     }
 
-    public static void sendBattlePanel(BattleMember player, TextChannel to, Consumer<Message> messageSent) {
+    public static void sendBattlePanel(IBattleMember player, TextChannel to, Consumer<Message> messageSent) {
 	MenuBuilder mBuilder = MenuBuilder.builder(to.getGuild()).setMessage(player.getBattlePanel())
 		.setRecipient(player.getMember());
 

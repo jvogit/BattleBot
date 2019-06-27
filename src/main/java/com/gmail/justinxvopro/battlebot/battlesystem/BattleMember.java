@@ -3,7 +3,7 @@ package com.gmail.justinxvopro.battlebot.battlesystem;
 import lombok.Getter;
 import net.dv8tion.jda.api.entities.Member;
 
-public class BattleMember extends BattlePlayer {
+public class BattleMember extends BattlePlayer implements IBattleMember {
     @Getter
     private Member member;
     
@@ -23,7 +23,7 @@ public class BattleMember extends BattlePlayer {
     }
 
     @Override
-    String getTaunt() {
+    public String getTaunt() {
 	return "You will not defeat me!";
     }
 }

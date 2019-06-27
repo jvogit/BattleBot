@@ -24,8 +24,8 @@ public abstract class Battle {
     
     public void tickAllAi() {
 	Stream.of(this.getInvolved()).forEach(player  -> {
-	    if (player instanceof BattleAIPlayer) {
-		((BattleAIPlayer) player).aiTick();
+	    if (player instanceof IBattleAIPlayer) {
+		((IBattleAIPlayer) player).aiTick();
 	    }
 	});
     }

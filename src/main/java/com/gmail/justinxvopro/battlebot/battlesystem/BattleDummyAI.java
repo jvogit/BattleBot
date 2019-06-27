@@ -3,7 +3,7 @@ package com.gmail.justinxvopro.battlebot.battlesystem;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class BattleDummyAI extends BattleDummy {
+public class BattleDummyAI extends BattleDummy implements IBattleAIPlayer {
     private boolean canAttack = false;
     
     public BattleDummyAI() {
