@@ -58,6 +58,10 @@ public class BossBattle extends Battle {
 	    return;
 	}
 	this.executeAllQueuedMoves();
+	Stream.of(this.getInvolved()).filter(player -> player.getHealth() <= 0).forEach(player -> {
+	    player.concatSpecialMessageWithNewline("**You are dead!**");
+	    BotCore.MENU_MANAGER.removeId(player.getMessage().getId());
+	});
 	super.gameTick();
 	if (boss.getHealth() <= 0) {
 	    this.stopBattle(false);

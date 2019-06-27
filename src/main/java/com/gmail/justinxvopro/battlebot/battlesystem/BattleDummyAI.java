@@ -6,15 +6,11 @@ import java.util.concurrent.ThreadLocalRandom;
 public class BattleDummyAI extends BattleDummy implements IBattleAIPlayer {
     private boolean canAttack = false;
     
-    public BattleDummyAI() {
-	super();
-    }
-    
     @Override
     public void aiTick() {
 	Random random = ThreadLocalRandom.current();
 	canAttack = random.nextBoolean();
-	if(canAttack) {
+	if(canAttack && getHealth() > 0) {
 	    this.queueMove(this.getMoveSet()[random.nextInt(this.getMoveSet().length)]);
 	}
     }

@@ -19,7 +19,7 @@ public class BattleMember extends BattlePlayer implements IBattleMember {
     }
     
     public static BattleMember formDefaultBattleMember(Member m) {
-	return new BattleMember(m, 50, new AttackMove(), new HealMove());
+	return new BattleMember(m, 50, new AttackMove(), new HealMove(), new ChargeAttackMove());
     }
 
     @Override

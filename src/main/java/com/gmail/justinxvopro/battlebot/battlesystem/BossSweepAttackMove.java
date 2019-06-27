@@ -4,11 +4,11 @@ import java.util.stream.Stream;
 
 import com.gmail.justinxvopro.battlebot.utils.RandomUtils;
 
-public class SweepAttackBossMove extends BossMove {
+public class BossSweepAttackMove extends BossMove {
     private int charging = 0;
     private final int complete_charge = 3;
     
-    public SweepAttackBossMove(BattleBossPlayer boss) {
+    public BossSweepAttackMove(BattleBossPlayer boss) {
 	super(boss);
     }
 

@@ -15,12 +15,11 @@ public class BattleBossMember extends BattleBossPlayer implements IBattleMember 
     
     @Override
     public String getName() {
-	return null;
+	return member.getEffectiveName();
     }
 
     @Override
     public String getTaunt() {
-	return null;
+	return "I am waay more powerful than all of you";
     }
-
 }
