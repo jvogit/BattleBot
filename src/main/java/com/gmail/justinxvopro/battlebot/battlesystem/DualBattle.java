@@ -26,7 +26,6 @@ public class DualBattle extends Battle {
     @Override
     public void gameTick() {
 	ticks++;
-
 	if (ticks == 1) {
 	    this.getInvolved()[0].setStatus(this.getInvolved()[0].getTaunt());
 	    this.getInvolved()[1].setStatus(this.getInvolved()[1].getTaunt());

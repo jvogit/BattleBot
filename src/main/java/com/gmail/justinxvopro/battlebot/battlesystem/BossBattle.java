@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.gmail.justinxvopro.battlebot.BotCore;
-import com.gmail.justinxvopro.battlebot.utils.RandomUtils;
 
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -35,7 +34,6 @@ public class BossBattle extends Battle {
 
     @Override
     public void gameTick() {
-	RandomUtils.log(this, "Boss ticking. . . " + ticks);
 	ticks++;
 	if (ticks == 1) {
 	    boss.setStatus(boss.getTaunt());
@@ -90,11 +88,13 @@ public class BossBattle extends Battle {
 	BattleManager.getBattleManager(output.getGuild()).stopBattle();
 	Stream.of(this.getInvolved()).forEach(player -> {
 	    BotCore.MENU_MANAGER.removeId(player.getMessage().getId());
+	    this.output.sendMessage(player.getBattlePanel()).queue();
+	    player.getMessage().delete().queue();
 	});
 	if (bossWon) {
-	    output.sendMessage("Boss won!").queue();
+	    output.sendMessage(boss.getName() + " has won! Better luck next time players. . .").queue();
 	} else {
-	    output.sendMessage("Players won!").queue();
+	    output.sendMessage(boss.getName() + " has fallen spectacularly! Good job players!").queue();
 	}
     }
 
