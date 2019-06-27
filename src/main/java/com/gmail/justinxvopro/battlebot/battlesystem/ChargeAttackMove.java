@@ -2,21 +2,27 @@ package com.gmail.justinxvopro.battlebot.battlesystem;
 
 import com.gmail.justinxvopro.battlebot.utils.RandomUtils;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
 public class ChargeAttackMove implements Move {
+    private int damage = 10;
     private int charges = 0;
-    private static final int complete_charge = 3;
+    private int complete_charge = 3;
     @Override
     public void performMove(BattlePlayer by, BattlePlayer on) {
 	if(RandomUtils.chance(50)) {
 	    charges++;
-	    by.setSpecialMessage(by.getSpecialMessage() + "\n" + getName() + " charged " + charges + "/" + complete_charge);
+	    by.concatSpecialMessageWithNewline(String.format("%s is charging. . . %s/%s", getName(), charges+"", complete_charge+""));
 	}else {
-	    by.setSpecialMessage(by.getSpecialMessage() + "\n" + getName() + " failed to charge!");
+	    by.concatSpecialMessageWithNewline(String.format("%s failed to charge!", getName()));
 	}
 	
 	if(charges >= 3) {
-	    on.setHealth(on.getHealth() - 10);
-	    by.setSpecialMessage(by.getSpecialMessage() + "\n" + getName() + " has fully charged and hit " + on.getName() + " for 10 damage.");
+	    on.setHealth(on.getHealth() - damage);
+	    by.concatSpecialMessageWithNewline(String.format("%s is fully charged and hits for %s damage!", getName(), damage+""));
 	    charges = 0;
 	}
     }

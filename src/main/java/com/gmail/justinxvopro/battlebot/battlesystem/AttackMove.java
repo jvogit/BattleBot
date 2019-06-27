@@ -2,15 +2,21 @@ package com.gmail.justinxvopro.battlebot.battlesystem;
 
 import com.gmail.justinxvopro.battlebot.utils.RandomUtils;
 
-public class AttackMove implements Move {
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
+@AllArgsConstructor
+public class AttackMove implements Move {
+    private int damage = 1;
+    
     @Override
     public void performMove(BattlePlayer by, BattlePlayer on) {
 	if(RandomUtils.chance(10)) {
-	    on.setHealth(on.getHealth() - 2);
+	    on.setHealth(on.getHealth() - (damage * 2));
 	    by.setSpecialMessage(by.getSpecialMessage() + "\n1 Attack Move hit for double damage!");
 	}else {
-	    on.setHealth(on.getHealth() - 1);
+	    on.setHealth(on.getHealth() - damage);
 	}
     }
 

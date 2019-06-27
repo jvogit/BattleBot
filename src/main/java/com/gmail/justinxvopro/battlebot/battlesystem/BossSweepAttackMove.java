@@ -4,12 +4,23 @@ import java.util.stream.Stream;
 
 import com.gmail.justinxvopro.battlebot.utils.RandomUtils;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 public class BossSweepAttackMove extends BossMove {
+    private int damage = 10;
     private int charging = 0;
-    private final int complete_charge = 3;
+    private int complete_charge = 3;
     
     public BossSweepAttackMove(BattleBossPlayer boss) {
 	super(boss);
+    }
+    
+    public BossSweepAttackMove(BattleBossPlayer boss, int damage, int charging, int complete_charge) {
+	super(boss);
+	this.damage = damage;
+	this.charging = charging;
+	this.complete_charge = complete_charge;
     }
 
     @Override
@@ -23,8 +34,8 @@ public class BossSweepAttackMove extends BossMove {
 	
 	if(charging >= complete_charge) {
 	    charging = 0;
-	    by.concatSpecialMessageWithNewline(String.format("%s is fully charged and hits everyone for 10 damage!", getName()));
-	    Stream.of(this.getBoss().getOpponents()).forEach(player -> player.setHealth(player.getHealth() - 10));
+	    by.concatSpecialMessageWithNewline(String.format("%s is fully charged and hits everyone for %s damage!", getName(), damage+""));
+	    Stream.of(this.getBoss().getOpponents()).forEach(player -> player.setHealth(player.getHealth() - damage));
 	}
 	
     }

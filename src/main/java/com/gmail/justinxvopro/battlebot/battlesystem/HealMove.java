@@ -2,14 +2,19 @@ package com.gmail.justinxvopro.battlebot.battlesystem;
 
 import com.gmail.justinxvopro.battlebot.utils.RandomUtils;
 
-public class HealMove implements Move {
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
+@AllArgsConstructor
+public class HealMove implements Move {
+    private int heal = 1;
     @Override
     public void performMove(BattlePlayer by, BattlePlayer on) {
 	if(RandomUtils.chance(30)) {
-	    by.setHealth(by.getHealth() + 1);
+	    by.setHealth(by.getHealth() + heal);
 	}else {
-	    by.setSpecialMessage(by.getSpecialMessage() + "\n1 Heal move failed!");
+	    by.concatSpecialMessageWithNewline(String.format("1 %s has failed!", getName()));
 	}
     }
 

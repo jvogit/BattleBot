@@ -8,6 +8,11 @@ public class BossAttackMove extends BossMove {
     public BossAttackMove(BattleBossPlayer boss) {
 	super(boss);
     }
+    
+    public BossAttackMove(BattleBossPlayer boss, int dmg) {
+	super(boss);
+	internal = new AttackMove(dmg);
+    }
 
     @Override
     public void performMove(BattlePlayer by, BattlePlayer on) {
