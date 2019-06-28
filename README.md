@@ -36,6 +36,7 @@ You can compile the source with Maven or download the release jar.
 Spar with a Battle Dummy to familerise yourself with moves or to pass those long game queue times!
 
 > Requests a dual with a BATLLE DUMMY.
+> ![enter image description here](https://i.imgur.com/fmzvRC1.gif)
 
 #### !battle dual @Player
 Same as above, but with a real life friend! How swell! Only one will come out ***ALIVE***
@@ -46,6 +47,7 @@ Same as above, but with a real life friend! How swell! Only one will come out **
 It's a party! Add one or ten ~~thousand~~ of your friends to duke it out in a spectacular **BATTLE OF THE CENTURY** where one of you will transform into a suped up, mega raid boss that will destroy everyone and the universe!
 
 > Requests a boss battle with all mentioned players. One will be randomly chosen to be the boss while the rest are teamed up against the boss. (Recommended: 3+)
+> ![enter image description here](https://imgur.com/YCFHKmX.gif)
 
 #### !battle wumpus @Player @Player @Player44
 Instead, gather one or two ~~thousand~~ of your friends to battle the one and only, the great, Wumpus, the overlord of Discord, the world, and the universe!
@@ -94,18 +96,22 @@ Each battle player will have their own battle panel. Battling is dead simple. Sp
 > **Same old basic attack move. But targets players randomly!**
 > 
 > Spam, spam, spam!
+> ![
+](https://imgur.com/Nej6jBI.gif)
 
 ### ⚔️ Sweep Attack Move
 
 > **Charge and attack every battle hero in one fell swoop!**
 > 
 > A powerful move for an equally powerful boss!
+> ![enter image description here](https://imgur.com/SCA4upf.gif)
 
 ### ❤️ Boss Heal Move
 
 > **Heal. For. 1. Damage.**
 > 
 > I don't why this is here.
+> ![enter image description here](https://imgur.com/PhVPTEd.gif)
 
 ## Configuration - config.json
 Whaaat? Epic battle music, too? Join with your friends in voice comms to the sound of \<insert your favorite hard core jams here\>.
