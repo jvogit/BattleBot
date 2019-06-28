@@ -2,7 +2,6 @@ package com.gmail.justinxvopro.battlebot.battlesystem;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 import com.gmail.justinxvopro.battlebot.BotCore;
@@ -67,7 +66,7 @@ public abstract class BattlePlayer implements IBattlePlayer {
     }
 
     public Message getBattlePanel() {
-	return BattlePlayer.formDefaultBattlePanel(this.getName(), this.getAvatarUrl(), getStatus(), getSpecialMessage(), getHealth()+"");
+	return BattlePlayer.formDefaultBattlePanel(this);
     }
     
     public void concatSpecialMessageWithNewline(String s) {
@@ -78,15 +77,17 @@ public abstract class BattlePlayer implements IBattlePlayer {
     
     public abstract String getTaunt();
 
-    public static void sendBattlePanel(BattlePlayer player, TextChannel to, Consumer<Message> messageSent) {
+    public static void sendBattlePanel(BattlePlayer player, TextChannel to) {
 	if (player instanceof IBattleMember) {
-	    BattlePlayer.sendBattlePanel((IBattleMember) player, to, messageSent);
+	    BattlePlayer.sendBattlePanel((IBattleMember) player, to);
 	} else {
-	    to.sendMessage(player.getBattlePanel()).queue(messageSent);
+	    to.sendMessage(player.getBattlePanel()).queue(msg -> {
+		player.setMessage(msg);
+	    });
 	}
     }
 
-    public static void sendBattlePanel(IBattleMember player, TextChannel to, Consumer<Message> messageSent) {
+    public static void sendBattlePanel(IBattleMember player, TextChannel to) {
 	MenuBuilder mBuilder = MenuBuilder.builder(to.getGuild()).setMessage(player.getBattlePanel())
 		.setRecipient(player.getMember());
 
@@ -97,15 +98,22 @@ public abstract class BattlePlayer implements IBattlePlayer {
 	    });
 	});
 
-	BotCore.MENU_MANAGER.submit(mBuilder.build(), to, messageSent);
+	BotCore.MENU_MANAGER.submit(mBuilder.build(), to, (msg)->{
+	    msg.editMessage(player.getMember().getAsMention()).queue();
+	    player.setMessage(msg);
+	});
     }
 
-    public static Message formDefaultBattlePanel(String name, String avatarUrl, String status, String specialStatus, String health) {
+    public static Message formDefaultBattlePanel(BattlePlayer player) {
 	EmbedBuilder embedBuilder = new EmbedBuilder();
-	embedBuilder.setTitle(name);
-	embedBuilder.setThumbnail(avatarUrl);
-	embedBuilder.getDescriptionBuilder().append(status);
-	embedBuilder.addField("Health", health + "", false);
+	embedBuilder.setAuthor("Battle Panel", "https://discord.gg", BotCore.BOT_JDA.getSelfUser().getAvatarUrl());
+	embedBuilder.setFooter("Your moves down below!");
+	embedBuilder.setTitle(player.getName());
+	embedBuilder.setThumbnail(player.getAvatarUrl());
+	embedBuilder.getDescriptionBuilder().append(player.getStatus());
+	embedBuilder.addField("**Your Health**", player.getHealth() + "", false);
+	embedBuilder.addField(player.getOpponent().getName() + "'s Health", player.getOpponent().getHealth()+"", false);
+	String specialStatus = player.getSpecialMessage();
 	if(specialStatus != null && !specialStatus.isEmpty()) {
 	    embedBuilder.getDescriptionBuilder().append("\n\n" + specialStatus);
 	}

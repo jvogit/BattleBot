@@ -39,7 +39,7 @@ public class DualBattle extends Battle {
 	if (ticks == 3) {
 	    preMessage.delete().complete();
 	    Stream.of(this.getInvolved()).forEach(player -> {
-		BattlePlayer.sendBattlePanel(player, output, player::setMessage);
+		BattlePlayer.sendBattlePanel(player, output);
 	    });
 	}
 	if (ticks > 3) {

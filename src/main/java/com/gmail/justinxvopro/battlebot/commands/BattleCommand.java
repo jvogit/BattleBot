@@ -31,6 +31,7 @@ import com.gmail.justinxvopro.battlebot.utils.RandomUtils;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.MessageBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -48,7 +49,7 @@ public class BattleCommand implements Command {
 	    return true;
 	}
 	
-	if(args[1].equalsIgnoreCase("end")) {
+	if(args[1].equalsIgnoreCase("end") && e.getMember().hasPermission(Permission.ADMINISTRATOR)) {
 	    BattleManager.getBattleManager(e.getGuild()).stopBattle();
 	    channel.sendMessage(BattleCommand.getFormattedMessage("Forcefully ended the battle!")).queue();
 	    return true;

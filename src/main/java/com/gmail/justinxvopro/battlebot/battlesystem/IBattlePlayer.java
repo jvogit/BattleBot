@@ -11,4 +11,6 @@ public interface IBattlePlayer {
     public void setOpponent(BattlePlayer player);
     public String getName();
     public String getAvatarUrl();
+    public void setMessage(Message msg);
+    public Message getMessage();
 }
