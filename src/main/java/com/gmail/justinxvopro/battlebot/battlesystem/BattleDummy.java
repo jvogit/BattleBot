@@ -3,7 +3,7 @@ package com.gmail.justinxvopro.battlebot.battlesystem;
 public class BattleDummy extends BattlePlayer {
 
     public BattleDummy() {
-	super(2, new Move[] {new AttackMove()});
+	super(50, new Move[] {new AttackMove()});
     }
 
     @Override
@@ -13,7 +13,7 @@ public class BattleDummy extends BattlePlayer {
     
     @Override
     public String getTaunt() {
-	return "...";
+	return "A worthy opponent!";
     }
 
 }

@@ -43,7 +43,7 @@ public class BotCore {
 
 	try {
 	    BOT_JDA = new JDABuilder().addEventListeners(new CommandListener(), BotCore.MENU_MANAGER, new EventsListener()).setToken(TOKEN).build();
-	    LOGGER.info(BOT_JDA.getInviteUrl(Permission.values()));
+	    LOGGER.info(BOT_JDA.getInviteUrl(Permission.MANAGE_EMOTES, Permission.MESSAGE_MANAGE));
 	} catch (LoginException e) {
 	    e.printStackTrace();
 	    LOGGER.error("Unable to login: " + e.getMessage());
