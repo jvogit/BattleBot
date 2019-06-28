@@ -95,9 +95,8 @@ Each battle player will have their own battle panel. Battling is dead simple. Sp
 
 > **Same old basic attack move. But targets players randomly!**
 > 
-> Spam, spam, spam!
-> ![
-](https://imgur.com/Nej6jBI.gif)
+> Spam, spam, spam! Attack a battle hero randomly!
+> ![](https://imgur.com/Nej6jBI.gif)
 
 ### ⚔️ Sweep Attack Move
 
@@ -110,7 +109,7 @@ Each battle player will have their own battle panel. Battling is dead simple. Sp
 
 > **Heal. For. 1. Damage.**
 > 
-> I don't why this is here.
+> I don't why this is here. But you heal for some damage!
 > ![enter image description here](https://imgur.com/PhVPTEd.gif)
 
 ## Configuration - config.json
