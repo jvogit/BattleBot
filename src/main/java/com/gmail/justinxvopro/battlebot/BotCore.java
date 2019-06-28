@@ -9,7 +9,6 @@ import javax.security.auth.login.LoginException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gmail.justinxvopro.battlebot.menusystem.MenuManager;
 import com.gmail.justinxvopro.battlebot.utils.Config;
 
@@ -19,7 +18,6 @@ import net.dv8tion.jda.api.Permission;
 
 public class BotCore {
     private static String TOKEN;
-    public static ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private final static Logger LOGGER = LoggerFactory.getLogger(BotCore.class);
     public static JDA BOT_JDA;
     public static final char PREFIX = '!';
