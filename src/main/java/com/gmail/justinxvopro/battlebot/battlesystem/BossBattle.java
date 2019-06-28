@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.gmail.justinxvopro.battlebot.BotCore;
+import com.gmail.justinxvopro.battlebot.commands.BattleCommand;
 
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -96,9 +97,9 @@ public class BossBattle extends Battle {
 	    player.getMessage().delete().queue();
 	});
 	if (bossWon) {
-	    output.sendMessage(boss.getName() + " has won! Better luck next time players. . .").queue();
+	    output.sendMessage(BattleCommand.getFormattedMessage(boss.getName() + " has won! Better luck next time players. . .")).queue();
 	} else {
-	    output.sendMessage(boss.getName() + " has fallen spectacularly! Good job players!").queue();
+	    output.sendMessage(BattleCommand.getFormattedMessage(boss.getName() + " has fallen spectacularly! Good job players!")).queue();
 	}
     }
 

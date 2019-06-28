@@ -8,7 +8,7 @@ public class BattleWumpusBoss extends BattleBossPlayer implements IBattleAIPlaye
     private long ticks;
     
     public BattleWumpusBoss() {
-	super(1000, new Move[] {});
+	super(500, new Move[] {});
 	this.setMoveSet(new Move[] {new BossAttackMove(this), new BossSweepAttackMove(this)});
 	this.setAvatarUrl("https://images.discordapp.net/avatars/562551251699630081/23f23de7b41aa0bb7fac1cb4edd5deed.png?size=512");
     }

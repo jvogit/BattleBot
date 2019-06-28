@@ -54,7 +54,7 @@ public class BattleCommand implements Command {
 
 	if (args[1].equalsIgnoreCase("boss")) {
 	    if(e.getMessage().getMentionedMembers().size() < 1) {
-		channel.sendMessage(this.getFormattedMessage("You need to mention at least 1 other player!")).queue();
+		channel.sendMessage(getFormattedMessage("You need to mention at least 1 other player!")).queue();
 		return true;
 	    }
 	    BattlePlayer[] players = new BattlePlayer[mentioned.size()];
@@ -67,7 +67,7 @@ public class BattleCommand implements Command {
 	    BattlePlayer[] players;
 	    if(e.getMessage().getMentionedMembers().size() < 1) {
 		players = new BattlePlayer[] {BattleMember.formDefaultBattleMember(e.getMember()), new BattleDummyAI(), new BattleDummyAI()};
-		channel.sendMessage(this.getFormattedMessage(":( Where are your friends? 2 Battle Dummies have joined your battle against Wumpus!")).queue();
+		channel.sendMessage(getFormattedMessage(":( Where are your friends? 2 Battle Dummies have joined your battle against Wumpus!")).queue();
 	    } else {
 		players = new BattlePlayer[mentioned.size()+1];
 		mentioned.add(e.getMember());
@@ -119,7 +119,7 @@ public class BattleCommand implements Command {
 	return mBuilder.setEmbed(embedBuilder.build()).build();
     }
     
-    private Message getFormattedMessage(String s) {
+    public static Message getFormattedMessage(String s) {
 	MessageBuilder mBuilder = new MessageBuilder();
 	EmbedBuilder embedBuilder = new EmbedBuilder();
 
@@ -137,19 +137,7 @@ public class BattleCommand implements Command {
 	bManager.setBattle(battle);
 	Set<Member> potential_members = Stream.of(player1, player2).filter(bp -> bp instanceof IBattleMember)
 		.map(bp -> ((IBattleMember) bp).getMember()).collect(Collectors.toSet());
-	VerificationManager.submitForVerification(out, (members) -> {
-	    if (!bManager.isStarted()) {
-		bManager.setStarted(true);
-		out.sendMessage("Starting battle. . .").queue(msg -> {
-		    msg.delete().queueAfter(5, TimeUnit.SECONDS, (v) -> {
-			bManager.startBattle(battle);
-		    });
-		});
-	    } else {
-		out.sendMessage(Stream.of(members).map(mem -> mem.getAsMention()).collect(Collectors.joining("\n"))
-			+ "\nYour battle has expired!").queue();
-	    }
-	}, potential_members.toArray(new Member[potential_members.size()]));
+	this.verifyMembersForBattle(out, battle, potential_members.toArray(new Member[potential_members.size()]));
     }
 
     private void setUpBossBattle(TextChannel out, BattleBossPlayer boss, BattlePlayer... players) {
@@ -158,19 +146,24 @@ public class BattleCommand implements Command {
 	bManager.setBattle(battle);
 	Set<Member> potential_members = Stream.of(battle.getInvolved()).filter(bp -> bp instanceof IBattleMember)
 		.map(bp -> ((IBattleMember) bp).getMember()).collect(Collectors.toSet());
+	this.verifyMembersForBattle(out, battle, potential_members.toArray(new Member[potential_members.size()]));
+    }
+    
+    private void verifyMembersForBattle(TextChannel out, Battle battle, Member...membersList) {
+	BattleManager bManager = BattleManager.getBattleManager(out.getGuild());
 	VerificationManager.submitForVerification(out, (members) -> {
 	    if (!bManager.isStarted()) {
 		bManager.setStarted(true);
-		out.sendMessage("Starting battle. . .").queue(msg -> {
-		    msg.delete().queueAfter(5, TimeUnit.SECONDS, (v) -> {
+		out.sendMessage(getFormattedMessage("Starting battle. . .")).queue(msg -> {
+		    msg.delete().queueAfter(2, TimeUnit.SECONDS, (v) -> {
 			bManager.startBattle(battle);
 		    });
 		});
 	    } else {
-		out.sendMessage(Stream.of(members).map(mem -> mem.getAsMention()).collect(Collectors.joining("\n"))
-			+ "\nYour battle has expired!").queue();
+		out.sendMessage(getFormattedMessage(Stream.of(members).map(mem -> mem.getAsMention()).collect(Collectors.joining("\n"))
+			+ "\nYour battle has expired!")).queue();
 	    }
-	}, potential_members.toArray(new Member[potential_members.size()]));
+	}, membersList);
     }
 
     @Override

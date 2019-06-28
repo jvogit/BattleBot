@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.gmail.justinxvopro.battlebot.BotCore;
+import com.gmail.justinxvopro.battlebot.commands.BattleCommand;
 
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -57,7 +58,7 @@ public class DualBattle extends Battle {
 		player.getMessage().delete().queue();
 	    });
 	    BattlePlayer winner = determineWinner();
-	    this.output.sendMessage(winner.getName() + " has won the dual!").queue();
+	    this.output.sendMessage(BattleCommand.getFormattedMessage(winner.getName() + " has won the dual!")).queue();
 	} else {
 	    Stream.of(this.getInvolved()).forEach(player -> {
 		player.setStatus("");
