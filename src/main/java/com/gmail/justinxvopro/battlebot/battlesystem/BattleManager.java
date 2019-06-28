@@ -6,6 +6,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import com.gmail.justinxvopro.battlebot.utils.RandomUtils;
+
 import lombok.Getter;
 import lombok.Setter;
 import net.dv8tion.jda.api.JDA;
@@ -55,9 +57,11 @@ public class BattleManager {
     }
     
     public static void update(JDA jda) {
-	BIG_DICT.clear();
 	jda.getGuilds().forEach(guild -> {
-	    BIG_DICT.put(guild, new BattleManager());
+	    if(!BIG_DICT.containsKey(guild)) {
+		RandomUtils.log(BattleManager.class, "Add " + guild.getId() + " to battle manager dictionary.");
+		BIG_DICT.put(guild, new BattleManager());
+	    }
 	});
     }
     

@@ -4,9 +4,6 @@ import java.util.stream.Stream;
 
 import com.gmail.justinxvopro.battlebot.utils.RandomUtils;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-
 public class BossSweepAttackMove extends BossMove {
     private int damage = 10;
     private int charging = 0;
@@ -42,7 +39,7 @@ public class BossSweepAttackMove extends BossMove {
 
     @Override
     public String getId() {
-	return "U+1F9F9";
+	return "U+2694"; //⚔️
     }
 
     @Override

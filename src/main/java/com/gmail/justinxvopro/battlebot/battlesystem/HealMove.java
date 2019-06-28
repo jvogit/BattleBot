@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class HealMove implements Move {
     private int heal = 1;
+    
     @Override
     public void performMove(BattlePlayer by, BattlePlayer on) {
 	if(RandomUtils.chance(30)) {
