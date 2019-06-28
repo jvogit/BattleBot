@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HealMove implements Move {
-    private int heal = 1;
+    private int heal = 2;
     
     @Override
     public void performMove(BattlePlayer by, BattlePlayer on) {

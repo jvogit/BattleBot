@@ -1,7 +1,6 @@
 package com.gmail.justinxvopro.battlebot.menusystem;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +37,7 @@ public class DiscordMenu {
 	return m;
     }
 
-    public Collection<String> reactions() {
+    public List<String> reactions() {
 	return ordered;
     }
 

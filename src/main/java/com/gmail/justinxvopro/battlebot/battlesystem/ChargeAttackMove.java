@@ -2,15 +2,18 @@ package com.gmail.justinxvopro.battlebot.battlesystem;
 
 import com.gmail.justinxvopro.battlebot.utils.RandomUtils;
 
-import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-@AllArgsConstructor
 public class ChargeAttackMove implements Move {
-    private int damage = 10;
+    private int damage = 5;
     private int charges = 0;
     private int complete_charge = 3;
+    
+    public ChargeAttackMove(int damage, int complete_charge) {
+	this.damage = damage;
+	this.complete_charge = complete_charge;
+    }
     @Override
     public void performMove(BattlePlayer by, BattlePlayer on) {
 	if(RandomUtils.chance(50)) {

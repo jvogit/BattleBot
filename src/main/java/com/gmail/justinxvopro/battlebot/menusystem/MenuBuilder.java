@@ -52,8 +52,7 @@ public class MenuBuilder {
     }
     
     public DiscordMenu build(){
-        return new DiscordMenu(guildId, m, memIds, mappedActions, orderedReacts);
-        
+	return new DiscordMenu(guildId, m, memIds, mappedActions, orderedReacts);   
     }
     
     public static MenuBuilder builder(Guild g){

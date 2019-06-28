@@ -25,10 +25,9 @@ public class MenuManager implements EventListener {
 
     public void submit(DiscordMenu menu, TextChannel t, Consumer<Message> to) {
         t.sendMessage(menu.getMessage()).queue(msg -> {
-            for (String id : menu.reactions().stream().sorted().collect(Collectors.toList())) {
+            for (String id : menu.reactions().stream().collect(Collectors.toList())) {
                 try {
                     Emote emote = msg.getGuild().getEmotesByName(id, true).get(0);
-
                     msg.addReaction(emote).queue();
                 } catch (Exception e) {
                     msg.addReaction(id).queue();
