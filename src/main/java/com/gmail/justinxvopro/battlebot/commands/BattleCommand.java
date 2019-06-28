@@ -49,7 +49,7 @@ public class BattleCommand implements Command {
 	    return true;
 	}
 	
-	if(args[1].equalsIgnoreCase("end") && e.getMember().hasPermission(Permission.ADMINISTRATOR)) {
+	if(args[1].equalsIgnoreCase("end") && (e.getMember().hasPermission(Permission.ADMINISTRATOR) || e.getMember().equals(e.getGuild().getSelfMember()))) {
 	    BattleManager.getBattleManager(e.getGuild()).stopBattle();
 	    channel.sendMessage(BattleCommand.getFormattedMessage("Forcefully ended the battle!")).queue();
 	    return true;
@@ -122,7 +122,8 @@ public class BattleCommand implements Command {
 		.addField("!battle spar", "Train with a Battle Dummy!", false)
 		.addField("!battle dual", "Dual with an opponent!", false)
 		.addField("!battle boss", "Create a boss battle with your friends!", false)
-		.addField("!battle wumpus", "Fight Wumpus with friends!", false);
+		.addField("!battle wumpus", "Fight Wumpus with friends!", false)
+		.addField("!battle end", "Forcefully end battle! Requires admin", false);
 
 	return mBuilder.setEmbed(embedBuilder.build()).build();
     }

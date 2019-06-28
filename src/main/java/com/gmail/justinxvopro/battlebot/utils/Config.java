@@ -13,7 +13,8 @@ public class Config {
     private static JsonNode CONFIG;
     private static ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private static Logger LOGGER = LoggerFactory.getLogger(Config.class);
-    public static String TOKEN, DUAL_MUSIC, BOSS_MUSIC, WUMPUS_MUSIC;
+    public static String TOKEN, DUAL_MUSIC, BOSS_MUSIC, WUMPUS_MUSIC, PREFIX;
+    public static int IDLE_TIMEOUT;
 
     public static void loadConfig(File configFile) {
 	try {
@@ -30,5 +31,7 @@ public class Config {
 	DUAL_MUSIC = CONFIG.get("dual-music").asText();
 	BOSS_MUSIC = CONFIG.get("boss-music").asText();
 	WUMPUS_MUSIC = CONFIG.get("wumpus-music").asText();
+	PREFIX = CONFIG.get("prefix").asText();
+	IDLE_TIMEOUT = CONFIG.get("idle-timeout").asInt();
     }
 }

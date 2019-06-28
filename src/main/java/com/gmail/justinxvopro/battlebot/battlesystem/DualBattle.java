@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 import com.gmail.justinxvopro.battlebot.BotCore;
 import com.gmail.justinxvopro.battlebot.commands.BattleCommand;
 import com.gmail.justinxvopro.battlebot.musicsystem.MusicManager;
+import com.gmail.justinxvopro.battlebot.utils.Config;
 
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -16,6 +17,7 @@ public class DualBattle extends Battle {
     private boolean hasEnded = false;
     private boolean hasStarted = false;
     private long ticks = 0;
+    private long idleTicks = 0;
     private Message preMessage;
 
     public DualBattle(BattlePlayer one, BattlePlayer two, TextChannel output) {
@@ -47,6 +49,7 @@ public class DualBattle extends Battle {
 	} else {
 	    return;
 	}
+	this.checkForIdle();
 	if (!this.checkForQueuedMoves() || ticks % 3 != 0)
 	    return;
 	this.executeAllQueuedMoves();
@@ -66,6 +69,18 @@ public class DualBattle extends Battle {
     private BattlePlayer determineWinner() {
 	return this.getInvolved()[0].getHealth() >= this.getInvolved()[1].getHealth() ? this.getInvolved()[0]
 		: this.getInvolved()[1];
+    }
+    
+    private void checkForIdle() {
+	if(!this.checkForQueuedMoves()) {
+	    idleTicks++;
+	    if(idleTicks >= 5) {
+		output.sendMessage(Config.PREFIX + "battle end").queue();
+		return;
+	    }
+	}else {
+	    idleTicks = 0;
+	}
     }
 
     @Override

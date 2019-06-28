@@ -10,6 +10,7 @@ import java.util.stream.Stream;
 import com.gmail.justinxvopro.battlebot.BotCore;
 import com.gmail.justinxvopro.battlebot.commands.BattleCommand;
 import com.gmail.justinxvopro.battlebot.musicsystem.MusicManager;
+import com.gmail.justinxvopro.battlebot.utils.Config;
 
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -17,6 +18,7 @@ import net.dv8tion.jda.api.entities.TextChannel;
 public class BossBattle extends Battle {
     private boolean ended = false, started = false;
     private long ticks = 0;
+    private long idleTicks = 0;
     private TextChannel output;
     private BattleBossPlayer boss;
     private BattlePlayer[] players;
@@ -56,6 +58,7 @@ public class BossBattle extends Battle {
 	} else {
 	    return;
 	}
+	this.checkForIdle();
 	if (!this.checkForQueuedMoves() || ticks % (this.getInvolved().length + 1) != 0) {
 	    return;
 	}
@@ -100,6 +103,18 @@ public class BossBattle extends Battle {
 	    output.sendMessage(
 		    BattleCommand.getFormattedMessage(boss.getName() + " has fallen spectacularly! Good job players!"))
 		    .queue();
+	}
+    }
+    
+    private void checkForIdle() {
+	if(!this.checkForQueuedMoves()) {
+	    idleTicks++;
+	    if(idleTicks >= 5) {
+		output.sendMessage(Config.PREFIX + "battle end").queue();
+		return;
+	    }
+	}else {
+	    idleTicks = 0;
 	}
     }
 

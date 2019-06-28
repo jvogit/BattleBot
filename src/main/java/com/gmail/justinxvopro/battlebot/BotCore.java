@@ -20,7 +20,6 @@ public class BotCore {
     private static String TOKEN;
     private final static Logger LOGGER = LoggerFactory.getLogger(BotCore.class);
     public static JDA BOT_JDA;
-    public static final char PREFIX = '!';
     public static final MenuManager MENU_MANAGER = new MenuManager();
 
     public static void main(String args[]) {
