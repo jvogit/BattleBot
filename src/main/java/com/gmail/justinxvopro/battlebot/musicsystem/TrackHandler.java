@@ -3,6 +3,7 @@ package com.gmail.justinxvopro.battlebot.musicsystem;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import com.gmail.justinxvopro.battlebot.utils.RandomUtils;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
@@ -26,7 +27,7 @@ public class TrackHandler extends AudioEventAdapter {
     
     public void play(Member m, AudioTrack track){
         q.add(new TrackInfo(m,track));
-        System.out.println("Trying to play!");
+        RandomUtils.log(this, "Trying to play " + track.getInfo().title);
         if(player.getPlayingTrack() == null){
             player.startTrack(track, true);
         }

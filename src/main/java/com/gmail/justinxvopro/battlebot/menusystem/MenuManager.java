@@ -7,8 +7,6 @@ import java.util.stream.Collectors;
 
 import org.slf4j.LoggerFactory;
 
-import com.gmail.justinxvopro.battlebot.utils.RandomUtils;
-
 import net.dv8tion.jda.api.entities.Emote;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -54,23 +52,18 @@ public class MenuManager implements EventListener {
             String emoji[] = event.getReactionEmote().isEmoji()
                     ? new String[] { event.getReactionEmote().getAsCodepoints(), event.getReactionEmote().getEmoji() }
                     : new String[] { event.getReactionEmote().getName().toLowerCase(), event.getReactionEmote().getId() };
-            RandomUtils.log(this, emoji[0] + " " + emoji[1] + " reaction event!"+event.getMessageId());
             if (!mappedMessages.containsKey(event.getMessageId()))
                 return;
-            RandomUtils.log(this, emoji[0] + " " + emoji[1] + " running!"+event.getMessageId());
             DiscordMenu menu = mappedMessages.get(event.getMessageId());
             
             if (menu.belongGuild(event.getGuild()) && (menu.getRecepientsId().stream()
                     .anyMatch(s -> s.equalsIgnoreCase(event.getMember().getUser().getId()))
                     || menu.getRecepientsId().isEmpty())) {
                 event.getTextChannel().retrieveMessageById(event.getMessageId()).queue(msg -> {
-                    RandomUtils.log(this, "Run queue"+event.getMessageId());
                     if (menu.execute(emoji, event.getReaction(), event.getMember(), msg)) {
-                	RandomUtils.log(this, "Done queue"+event.getMessageId());
                         removeId(event.getMessageId());
                     }
                 });
-                RandomUtils.log(this, "Completed Execution!"+event.getMessageId());
             }
         }
 
