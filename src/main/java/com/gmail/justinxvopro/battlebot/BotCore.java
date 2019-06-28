@@ -9,9 +9,9 @@ import javax.security.auth.login.LoginException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gmail.justinxvopro.battlebot.menusystem.MenuManager;
+import com.gmail.justinxvopro.battlebot.utils.Config;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -35,19 +35,13 @@ public class BotCore {
 		return;
 	    }
 	}
+	Config.loadConfig(configFile);
 	if (args.length >= 2 && args[0].equalsIgnoreCase("-token")) {
 	    LOGGER.info("Detected -token arguments using token provided");
 	    TOKEN = args[1];
 	} else {
 	    LOGGER.info("Using config.json token");
-	    try {
-		JsonNode config = OBJECT_MAPPER.readTree(configFile);
-		JsonNode token = config.findPath("token");
-		TOKEN = token.asText();
-	    } catch (IOException ex) {
-		ex.printStackTrace();
-		LOGGER.warn("IOException while trying to retrieve token from config.json: " + ex.getMessage());
-	    }
+	    TOKEN = Config.TOKEN;
 	}
 
 	try {

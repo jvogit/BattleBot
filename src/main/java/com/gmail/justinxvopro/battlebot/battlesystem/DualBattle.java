@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 
 import com.gmail.justinxvopro.battlebot.BotCore;
 import com.gmail.justinxvopro.battlebot.commands.BattleCommand;
+import com.gmail.justinxvopro.battlebot.musicsystem.MusicManager;
 
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -52,11 +53,6 @@ public class DualBattle extends Battle {
 	super.gameTick();
 	if (Stream.of(this.getInvolved()).anyMatch(bp -> bp.getHealth() <= 0)) {
 	    BattleManager.getBattleManager(output.getGuild()).stopBattle();
-	    Stream.of(this.getInvolved()).forEach(player -> {
-		BotCore.MENU_MANAGER.removeId(player.getMessage().getId());
-		this.output.sendMessage(player.getBattlePanel()).queue();
-		player.getMessage().delete().queue();
-	    });
 	    BattlePlayer winner = determineWinner();
 	    this.output.sendMessage(BattleCommand.getFormattedMessage(winner.getName() + " has won the dual!")).queue();
 	} else {
@@ -93,6 +89,12 @@ public class DualBattle extends Battle {
     @Override
     public void end() {
 	this.hasEnded = true;
+	Stream.of(this.getInvolved()).forEach(player -> {
+	    BotCore.MENU_MANAGER.removeId(player.getMessage().getId());
+	    this.output.sendMessage(player.getBattlePanel()).queue();
+	    player.getMessage().delete().queue();
+	});
+	MusicManager.getInstance().reset(output.getGuild());
     }
 
     @Override

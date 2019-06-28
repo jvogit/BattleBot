@@ -26,6 +26,7 @@ import com.gmail.justinxvopro.battlebot.battlesystem.HealMove;
 import com.gmail.justinxvopro.battlebot.battlesystem.IBattleMember;
 import com.gmail.justinxvopro.battlebot.battlesystem.Move;
 import com.gmail.justinxvopro.battlebot.battlesystem.VerificationManager;
+import com.gmail.justinxvopro.battlebot.utils.Config;
 import com.gmail.justinxvopro.battlebot.utils.RandomUtils;
 
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -44,6 +45,12 @@ public class BattleCommand implements Command {
 	BattleManager bManager = BattleManager.getBattleManager(e.getGuild());
 	if (args.length <= 1) {
 	    channel.sendMessage(this.getHelpMessage()).queue();
+	    return true;
+	}
+	
+	if(args[1].equalsIgnoreCase("end")) {
+	    BattleManager.getBattleManager(e.getGuild()).stopBattle();
+	    channel.sendMessage(BattleCommand.getFormattedMessage("Forcefully ended the battle!")).queue();
 	    return true;
 	}
 
@@ -137,7 +144,7 @@ public class BattleCommand implements Command {
 	bManager.setBattle(battle);
 	Set<Member> potential_members = Stream.of(player1, player2).filter(bp -> bp instanceof IBattleMember)
 		.map(bp -> ((IBattleMember) bp).getMember()).collect(Collectors.toSet());
-	this.verifyMembersForBattle(out, battle, potential_members.toArray(new Member[potential_members.size()]));
+	this.verifyMembersForBattle(out, battle, Config.DUAL_MUSIC, potential_members.toArray(new Member[potential_members.size()]));
     }
 
     private void setUpBossBattle(TextChannel out, BattleBossPlayer boss, BattlePlayer... players) {
@@ -146,15 +153,16 @@ public class BattleCommand implements Command {
 	bManager.setBattle(battle);
 	Set<Member> potential_members = Stream.of(battle.getInvolved()).filter(bp -> bp instanceof IBattleMember)
 		.map(bp -> ((IBattleMember) bp).getMember()).collect(Collectors.toSet());
-	this.verifyMembersForBattle(out, battle, potential_members.toArray(new Member[potential_members.size()]));
+	this.verifyMembersForBattle(out, battle, Config.WUMPUS_MUSIC, potential_members.toArray(new Member[potential_members.size()]));
     }
     
-    private void verifyMembersForBattle(TextChannel out, Battle battle, Member...membersList) {
+    private void verifyMembersForBattle(TextChannel out, Battle battle, String musicId, Member...membersList) {
 	BattleManager bManager = BattleManager.getBattleManager(out.getGuild());
 	VerificationManager.submitForVerification(out, (members) -> {
 	    if (!bManager.isStarted()) {
 		bManager.setStarted(true);
 		out.sendMessage(getFormattedMessage("Starting battle. . .")).queue(msg -> {
+		    Battle.queueBattleMusic(battle, musicId);
 		    msg.delete().queueAfter(2, TimeUnit.SECONDS, (v) -> {
 			bManager.startBattle(battle);
 		    });

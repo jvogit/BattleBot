@@ -2,8 +2,14 @@ package com.gmail.justinxvopro.battlebot.utils;
 
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Stream;
 
 import org.slf4j.LoggerFactory;
+
+import com.gmail.justinxvopro.battlebot.battlesystem.BattlePlayer;
+import com.gmail.justinxvopro.battlebot.battlesystem.IBattleMember;
+
+import net.dv8tion.jda.api.entities.Member;
 
 public class RandomUtils {
     
@@ -25,6 +31,15 @@ public class RandomUtils {
     
     public static void log(Class<?> o, String s) {
 	LoggerFactory.getLogger(o).info(s);
+    }
+    
+    public static Member getMemberInVoiceChannelFromBattlePlayerArray(BattlePlayer[] members) {
+	return Stream.of(members)
+		.filter(p -> p instanceof IBattleMember)
+		.map(bp -> ((IBattleMember) bp).getMember())
+		.filter(m -> m.getVoiceState().inVoiceChannel())
+		.findAny()
+		.orElse(null);
     }
     
 }

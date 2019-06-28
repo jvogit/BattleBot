@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 
 import com.gmail.justinxvopro.battlebot.BotCore;
 import com.gmail.justinxvopro.battlebot.commands.BattleCommand;
+import com.gmail.justinxvopro.battlebot.musicsystem.MusicManager;
 
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -55,7 +56,7 @@ public class BossBattle extends Battle {
 	} else {
 	    return;
 	}
-	if (!this.checkForQueuedMoves() || ticks % (this.getInvolved().length+1) != 0) {
+	if (!this.checkForQueuedMoves() || ticks % (this.getInvolved().length + 1) != 0) {
 	    return;
 	}
 	this.executeAllQueuedMoves();
@@ -91,15 +92,14 @@ public class BossBattle extends Battle {
 
     private void stopBattle(boolean bossWon) {
 	BattleManager.getBattleManager(output.getGuild()).stopBattle();
-	Stream.of(this.getInvolved()).forEach(player -> {
-	    BotCore.MENU_MANAGER.removeId(player.getMessage().getId());
-	    this.output.sendMessage(player.getBattlePanel()).queue();
-	    player.getMessage().delete().queue();
-	});
 	if (bossWon) {
-	    output.sendMessage(BattleCommand.getFormattedMessage(boss.getName() + " has won! Better luck next time players. . .")).queue();
+	    output.sendMessage(
+		    BattleCommand.getFormattedMessage(boss.getName() + " has won! Better luck next time players. . ."))
+		    .queue();
 	} else {
-	    output.sendMessage(BattleCommand.getFormattedMessage(boss.getName() + " has fallen spectacularly! Good job players!")).queue();
+	    output.sendMessage(
+		    BattleCommand.getFormattedMessage(boss.getName() + " has fallen spectacularly! Good job players!"))
+		    .queue();
 	}
     }
 
@@ -111,6 +111,12 @@ public class BossBattle extends Battle {
     @Override
     public void end() {
 	this.ended = true;
+	Stream.of(this.getInvolved()).forEach(player -> {
+	    BotCore.MENU_MANAGER.removeId(player.getMessage().getId());
+	    this.output.sendMessage(player.getBattlePanel()).queue();
+	    player.getMessage().delete().queue();
+	});
+	MusicManager.getInstance().reset(output.getGuild());
     }
 
     @Override

@@ -2,8 +2,12 @@ package com.gmail.justinxvopro.battlebot.battlesystem;
 
 import java.util.stream.Stream;
 
+import com.gmail.justinxvopro.battlebot.musicsystem.MusicManager;
+import com.gmail.justinxvopro.battlebot.utils.RandomUtils;
+
 import lombok.Getter;
 import lombok.Setter;
+import net.dv8tion.jda.api.entities.Member;
 
 public abstract class Battle {
 
@@ -42,6 +46,13 @@ public abstract class Battle {
     
     public void executeAllQueuedMoves() {
 	Stream.of(this.involved).forEach(BattlePlayer::executeQueuedMoves);
+    }
+    
+    public static void queueBattleMusic(Battle battle, String id) {
+	Member voiceMember = RandomUtils.getMemberInVoiceChannelFromBattlePlayerArray(battle.getInvolved());
+	if(voiceMember != null) {
+	    MusicManager.getInstance().play(id, voiceMember);
+	}
     }
 
     public abstract void start();
