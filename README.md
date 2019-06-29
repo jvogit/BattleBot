@@ -20,7 +20,7 @@ You can compile the source with Maven or download the release jar.
 2. **Invite the Bot.** 
 
 > The invite link will be logged after running the bot.
-> Additionally for Discord Hack Week only, you can play with the bot in my test server [here](https://discord.gg/D4qhjbw).
+> Additionally for Discord Hack Week only, you can play with the bot in my test server [here](https://discord.gg/D4qhjbw) or [invite the bot!](https://discordapp.com/oauth2/authorize?scope=bot&client_id=592785625925550120&permissions=1073750016)
 
 ## Commands
 
