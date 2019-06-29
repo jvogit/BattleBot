@@ -115,6 +115,8 @@ Each battle player will have their own battle panel. Battling is dead simple. Sp
 ## Configuration - config.json
 Whaaat? Epic battle music, too? Join with your friends in voice comms to the sound of \<insert your favorite hard core jams here\>.
 
+> At least one member must already be in a voice channel before starting the battle for battle music to play!
+
 ```
 {
 	"token":"",
