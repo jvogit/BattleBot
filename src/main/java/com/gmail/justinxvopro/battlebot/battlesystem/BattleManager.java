@@ -74,6 +74,14 @@ public class BattleManager {
 	});
     }
     
+    public static void remove(Guild event) {
+	if(BIG_DICT.containsKey(event)) {
+	    BattleManager man = BIG_DICT.remove(event);
+	    if(man.onGoingBattle != null)
+		man.stopBattle();
+	}
+    }
+    
     public static BattleManager getBattleManager(Guild g) {
 	return BIG_DICT.get(g);
     }
