@@ -74,7 +74,7 @@ public class DualBattle extends Battle {
     private void checkForIdle() {
 	if(!this.checkForQueuedMoves()) {
 	    idleTicks++;
-	    if(idleTicks >= 5) {
+	    if(idleTicks >= Config.IDLE_TIMEOUT) {
 		output.sendMessage(Config.PREFIX + "battle end").queue();
 		return;
 	    }
