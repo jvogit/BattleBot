@@ -1,7 +1,8 @@
 ﻿
 # BattleBot
 BattleBot is my submission to Discord Hack Week! Spend your down time in between games battling against your friends or even Wumpus in a fun, spammy way!
-![enter image description here](https://imgur.com/kCl10SM.gif)
+
+> ![enter image description here](https://imgur.com/kCl10SM.gif)
 
 ![Discord Hack Week](https://cdn-images-1.medium.com/max/2600/1*lh6NS8hx0pu5mlZeSqnu5w.jpeg)
 ## Setup
