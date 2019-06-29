@@ -155,7 +155,7 @@ public class BattleCommand implements Command {
 	bManager.setBattle(battle);
 	Set<Member> potential_members = Stream.of(battle.getInvolved()).filter(bp -> bp instanceof IBattleMember)
 		.map(bp -> ((IBattleMember) bp).getMember()).collect(Collectors.toSet());
-	this.verifyMembersForBattle(out, battle, Config.WUMPUS_MUSIC, potential_members.toArray(new Member[potential_members.size()]));
+	this.verifyMembersForBattle(out, battle, boss instanceof BattleWumpusBoss ? Config.WUMPUS_MUSIC : Config.BOSS_MUSIC, potential_members.toArray(new Member[potential_members.size()]));
     }
     
     private void verifyMembersForBattle(TextChannel out, Battle battle, String musicId, Member...membersList) {
