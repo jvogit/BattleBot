@@ -20,7 +20,6 @@ You can compile the source with Maven or download the release jar.
 2. **Invite the Bot.** 
 
 > The invite link will be logged after running the bot.
-> Additionally for Discord Hack Week only, you can play with the bot in my test server [here](https://discord.gg/D4qhjbw) or [invite the bot!](https://discordapp.com/oauth2/authorize?scope=bot&client_id=592785625925550120&permissions=1073750016)
 
 ## Commands
 
@@ -135,11 +134,6 @@ Whaaat? Epic battle music, too? Join with your friends in voice comms to the sou
 Thank you to Discord for hosting a hack week! I got inspired to make this from a similar mechanic from my personal bot and also **boredom** those long game queue times. It was a lot of fun making this project. Thank you to my friends who helped test out my bot and their feedback.
 
 ## Important LINKS!
-
-Join my test server to try out the bot [here](https://discord.gg/D4qhjbw). 
-
-> For Discord Hack Week only, invite the bot using the link
-> [here!](https://discordapp.com/oauth2/authorize?scope=bot&client_id=592785625925550120&permissions=1073750016) Managing emojis and messages are required permission! The bot is not built to scale with multiple guilds well, so there might be downtime, there might be bugs. For the best possible result, host your own local instance!
 
 Open source libraries in my projects:
 
