@@ -42,7 +42,7 @@ public class BotCore {
 	}
 
 	try {
-	    BOT_JDA = new JDABuilder().addEventListeners(new CommandListener(), BotCore.MENU_MANAGER, new EventsListener()).setToken(TOKEN).build();
+	    BOT_JDA = JDABuilder.createDefault(TOKEN).addEventListeners(new CommandListener(), BotCore.MENU_MANAGER, new EventsListener()).build();
 	    LOGGER.info(BOT_JDA.getInviteUrl(Permission.MANAGE_EMOTES, Permission.MESSAGE_MANAGE));
 	} catch (LoginException e) {
 	    e.printStackTrace();
